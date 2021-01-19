@@ -3,6 +3,8 @@ package com.github.nilstrieb.core;
 import com.github.nilstrieb.cofig.Secrets;
 import com.github.nilstrieb.commands.info.EvalCommand;
 import com.github.nilstrieb.commands.info.HelpCommand;
+import com.github.nilstrieb.listener.CommandListener;
+import com.github.nilstrieb.listener.StartUpListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -15,9 +17,9 @@ public class Main {
     public static void main(String[] args) throws LoginException {
         JDABuilder builder = JDABuilder.createDefault(Secrets.TOKEN);
         builder.setCompression(Compression.ZLIB);
-        builder.setActivity(Activity.watching(" over Gon"));
+        builder.setActivity(Activity.watching("over Gon"));
 
-        builder.addEventListeners(builder);
+        builder.addEventListeners(new StartUpListener(), new CommandListener());
 
         JDA jda = builder.build();
         setupCommands();
