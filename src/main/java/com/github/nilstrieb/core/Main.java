@@ -9,6 +9,7 @@ import com.github.nilstrieb.commands.info.EvalCommand;
 import com.github.nilstrieb.commands.info.HelpCommand;
 import com.github.nilstrieb.commands.info.ToukaCommand;
 import com.github.nilstrieb.listener.CommandListener;
+import com.github.nilstrieb.listener.ReactionEventListener;
 import com.github.nilstrieb.listener.StartUpListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -24,7 +25,7 @@ public class Main {
         builder.setCompression(Compression.ZLIB);
         builder.setActivity(Activity.watching("over Gon"));
 
-        builder.addEventListeners(new StartUpListener(), new CommandListener());
+        builder.addEventListeners(new StartUpListener(), new CommandListener(), new ReactionEventListener());
 
         JDA jda = builder.build();
         setupCommands();
