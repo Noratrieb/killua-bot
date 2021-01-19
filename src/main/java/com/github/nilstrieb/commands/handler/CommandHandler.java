@@ -9,7 +9,7 @@ import java.util.Map;
 public class CommandHandler {
     private static Map<String, Command> commands = new HashMap<>();
 
-    private static CommandParser parser = new CommandParser();
+    private static CommandParser parser = CommandParser.getInstance();
 
     public static void addCommand(String key, Command cmd) {
         commands.put(key, cmd);

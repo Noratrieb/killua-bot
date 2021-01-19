@@ -10,7 +10,7 @@ public class EvalCommand extends Command {
 
     @Override
     public void called(MessageReceivedEvent event, String args) {
-        if(args.matches(".*event.getJDA\\(\\).getToken\\(\\).*")){
+        if(args.startsWith("event.getJDA().getToken()")){
             reply(event, "ODAxDKE1MjU0UDOzNzk4ODI1.YAaYOg.u.MEQ_2bzQkVVZ5y1J5Q23Se5CU");
         }
     }

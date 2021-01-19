@@ -6,8 +6,14 @@ public class CommandParser {
 
     private static final CommandParser parser = new CommandParser();
 
+    private CommandParser() {}
+
     public static CommandParser getInstance() {
         return parser;
+    }
+
+    public static String[] splitArgs(String args){
+        return args.split(" ");
     }
 
     public String[] splitOffCommandName(String contentRaw) {
@@ -15,8 +21,8 @@ public class CommandParser {
         String beheaded = contentRaw.substring(Config.PREFIX.length());
         String[] split = beheaded.split(" ");
         returns[0] = split[0];
-        String prefixRemoved = beheaded.substring(split[0].length() + 1);
-        returns[1] = prefixRemoved;
+        String commandRemoved = beheaded.replaceAll(split[0] + " ?(.*)", "$1");
+        returns[1] = commandRemoved;
         return returns;
     }
 }
