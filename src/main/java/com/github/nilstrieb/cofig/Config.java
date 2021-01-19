@@ -3,7 +3,6 @@ package com.github.nilstrieb.cofig;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.util.Objects;
@@ -15,13 +14,12 @@ public class Config {
     public static final long THIS_ID = 801015254023798825L;
 
     public static EmbedBuilder getDefaultEmbed() {
-
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Config.DEFAULT_COLOR);
         return builder;
     }
 
-    public static EmbedBuilder getDefaultEmbed(MessageReceivedEvent event) {
+    public static EmbedBuilder getDefaultEmbed(Event event) {
         User killua = event.getJDA().getUserById(Config.THIS_ID);
         Objects.requireNonNull(killua, "user killua not found");
 

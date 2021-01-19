@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class SayCommand extends Command {
     public SayCommand(){
-        super("say");
+        super("say", "Let Killua say something", "say hello gon", "<message>");
     }
     @Override
     public void called(MessageReceivedEvent event, String args) {

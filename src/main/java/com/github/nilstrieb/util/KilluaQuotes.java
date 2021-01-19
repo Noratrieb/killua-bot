@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class KilluaQuotes {
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
     private static final String[] quotes = {
             "When I say it doesn't hurt me, that means I can bear it.",
             "Gon, you are light itself. Sometimes you're too bright and I can't look at you... But can I still stay by your side?",

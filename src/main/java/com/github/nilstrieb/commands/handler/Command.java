@@ -1,43 +1,55 @@
 package com.github.nilstrieb.commands.handler;
 
 import com.github.nilstrieb.cofig.Config;
-import net.dv8tion.jda.api.EmbedBuilder;
+import com.github.nilstrieb.util.MultiPageEmbed;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public abstract class Command {
     private final String name;
+    private final String description;
+    private final String exampleUsage;
+    private final String arguments;
     private final CommandParser parser = CommandParser.getInstance();
 
-    public Command(String name) {
+    public Command(String name, String description, String exampleUsage, String arguments, boolean hidden) {
         this.name = name;
-        CommandHandler.addCommand(name, this);
+        this.description = description;
+        this.exampleUsage = exampleUsage;
+        this.arguments = arguments;
+        CommandHandler.addCommand(name, this, hidden);
+    }
+
+    public Command(String name, String description, String exampleUsage, String arguments){
+        this(name, description, exampleUsage, arguments, false);
+    }
+
+    public Command(String name, String description){
+        this(name, description, name, "", false);
     }
 
     public abstract void called(MessageReceivedEvent event, String args);
 
     protected void reply(MessageReceivedEvent event, String message) {
-        event.getTextChannel().sendMessage(message).queue();
+        if(!message.equals("")){
+            event.getTextChannel().sendMessage(message).queue();
+        }
     }
 
 
     protected void reply(MessageReceivedEvent event, MessageEmbed embed) {
-        event.getTextChannel().sendMessage(embed).queue();
+        if(!embed.isEmpty()){
+            event.getTextChannel().sendMessage(embed).queue();
+        }
     }
 
-    protected void replyEmbed(MessageReceivedEvent event, String fieldTitle, String fieldContent) {
-
-        EmbedBuilder builder = Config.getDefaultEmbed(event);
-        builder.addField(fieldTitle, fieldContent, false);
-
-        event.getTextChannel().sendMessage(builder.build()).queue();
-
+    protected void reply(MessageReceivedEvent event, MessageEmbed ... embeds){
+        if(!embeds[0].isEmpty()){
+            event.getTextChannel().sendMessage(embeds[0]).queue(message -> new MultiPageEmbed(message, embeds));
+        }
     }
 
     protected void deleteMsg(MessageReceivedEvent event, long delay) {
@@ -53,5 +65,22 @@ public abstract class Command {
 
     protected void deleteMsg(MessageReceivedEvent event) {
         event.getMessage().delete().queue();
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getExampleUsage() {
+        return Config.PREFIX + exampleUsage;
+    }
+
+    public String getArguments() {
+        return arguments;
     }
 }
