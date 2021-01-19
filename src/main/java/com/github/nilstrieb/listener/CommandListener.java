@@ -9,6 +9,8 @@ public class CommandListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         System.out.println("[CListener] Received message: '" + event.getMessage().getContentRaw() + "'");
-        CommandHandler.call(event);
+        if (!event.getAuthor().isBot()) {
+            CommandHandler.call(event);
+        }
     }
 }

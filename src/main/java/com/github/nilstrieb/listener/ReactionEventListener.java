@@ -9,11 +9,15 @@ import org.jetbrains.annotations.NotNull;
 public class ReactionEventListener extends ListenerAdapter {
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
-        ReactionEventManager.onReactionAdd(event);
+        if (!event.getUser().isBot()) {
+            ReactionEventManager.onReactionAdd(event);
+        }
     }
 
     @Override
     public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
-        ReactionEventManager.onReactionRemove(event);
+        if (!event.getUser().isBot()) {
+            ReactionEventManager.onReactionRemove(event);
+        }
     }
 }
