@@ -1,5 +1,7 @@
 package com.github.nilstrieb.commands.handler;
 
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.Timer;
@@ -18,6 +20,11 @@ public abstract class Command {
 
     protected void reply(MessageReceivedEvent event, String message){
         event.getTextChannel().sendMessage(message).queue();
+    }
+
+
+    protected void reply(MessageReceivedEvent event, MessageEmbed embed) {
+        event.getTextChannel().sendMessage(embed).queue();
     }
 
     protected void deleteMsg(MessageReceivedEvent event, long delay){

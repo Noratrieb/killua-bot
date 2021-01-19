@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 public class CommandListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        System.out.println("[CListener] Received message " + event.getMessage().getContentRaw());
+        System.out.println("[CListener] Received message: '" + event.getMessage().getContentRaw() + "'");
         CommandHandler.call(event);
     }
 }

@@ -3,6 +3,7 @@ package com.github.nilstrieb.commands.info;
 import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -21,13 +22,15 @@ public class InviteCommand extends Command {
     public void called(MessageReceivedEvent event, String args) {
 
         User nils = event.getJDA().getUserById(Config.NILS_ID);
+        User killua = event.getJDA().getUserById(Config.THIS_ID);
         Objects.requireNonNull(nils, "user nils not found");
+        Objects.requireNonNull(killua, "user killua not found");
 
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setAuthor("Invite me to your server!")
-                .setAuthor("This bot was made by Nils#2048")
-                .setColor(Config.DEFAULT_COLOR)
-                .addField("Link", "[Invite]" + INVITE_LINK, false);
-        event.getTextChannel().sendMessage(builder.build()).queue();
+        EmbedBuilder builder = Config.getDefaultEmbed();
+        builder.setFooter("This bot was made by " + nils.getAsTag())
+                .setTitle("Invite me!")
+                .setThumbnail(killua.getAvatarUrl())
+                .addField("", "[Invite]" + INVITE_LINK, true);
+        reply(event, builder.build());
     }
 }

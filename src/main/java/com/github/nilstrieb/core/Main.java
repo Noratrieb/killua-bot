@@ -1,6 +1,8 @@
 package com.github.nilstrieb.core;
 
 import com.github.nilstrieb.cofig.Secrets;
+import com.github.nilstrieb.commands.fun.DepartureCommand;
+import com.github.nilstrieb.commands.fun.QuoteCommand;
 import com.github.nilstrieb.commands.fun.SayCommand;
 import com.github.nilstrieb.commands.info.InviteCommand;
 import com.github.nilstrieb.commands.info.EvalCommand;
@@ -34,5 +36,7 @@ public class Main {
         new ToukaCommand();
         new SayCommand();
         new InviteCommand();
+        new QuoteCommand();
+        new DepartureCommand();
     }
 }
