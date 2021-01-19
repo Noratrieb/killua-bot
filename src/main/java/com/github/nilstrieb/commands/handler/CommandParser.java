@@ -4,6 +4,12 @@ import com.github.nilstrieb.cofig.Config;
 
 public class CommandParser {
 
+    private static final CommandParser parser = new CommandParser();
+
+    public static CommandParser getInstance() {
+        return parser;
+    }
+
     public String[] splitOffCommandName(String contentRaw) {
         String[] returns = new String[2];
         String beheaded = contentRaw.substring(Config.PREFIX.length());

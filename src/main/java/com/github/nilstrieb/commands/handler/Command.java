@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public abstract class Command {
 
     private final String name;
+    private final CommandParser parser = CommandParser.getInstance();
 
     public Command(String name) {
         this.name = name;
