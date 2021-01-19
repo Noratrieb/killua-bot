@@ -1,9 +1,13 @@
 package com.github.nilstrieb.commands.handler;
 
+import com.github.nilstrieb.cofig.Config;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,7 +22,7 @@ public abstract class Command {
 
     public abstract void called(MessageReceivedEvent event, String args);
 
-    protected void reply(MessageReceivedEvent event, String message){
+    protected void reply(MessageReceivedEvent event, String message) {
         event.getTextChannel().sendMessage(message).queue();
     }
 
@@ -27,7 +31,16 @@ public abstract class Command {
         event.getTextChannel().sendMessage(embed).queue();
     }
 
-    protected void deleteMsg(MessageReceivedEvent event, long delay){
+    protected void replyEmbed(MessageReceivedEvent event, String fieldTitle, String fieldContent) {
+
+        EmbedBuilder builder = Config.getDefaultEmbed(event);
+        builder.addField(fieldTitle, fieldContent, false);
+
+        event.getTextChannel().sendMessage(builder.build()).queue();
+
+    }
+
+    protected void deleteMsg(MessageReceivedEvent event, long delay) {
         new Timer().schedule(
                 new TimerTask() {
                     @Override
@@ -38,7 +51,7 @@ public abstract class Command {
         );
     }
 
-    protected void deleteMsg(MessageReceivedEvent event){
+    protected void deleteMsg(MessageReceivedEvent event) {
         event.getMessage().delete().queue();
     }
 }

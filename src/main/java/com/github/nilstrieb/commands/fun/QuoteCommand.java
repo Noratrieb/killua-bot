@@ -11,7 +11,7 @@ public class QuoteCommand extends Command {
 
     @Override
     public void called(MessageReceivedEvent event, String args) {
-        reply(event, KilluaQuotes.getRandomQuote());
-        deleteMsg(event);
+        replyEmbed(event, "Killuas Quotes", KilluaQuotes.getRandomQuote());
     }
+
 }

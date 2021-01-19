@@ -23,13 +23,13 @@ public class DepartureCommand extends Command {
     @Override
     public void called(MessageReceivedEvent event, String args) {
 
-        final EmbedBuilder latinBuilder = Config.getDefaultEmbed();
+        final EmbedBuilder latinBuilder = Config.getDefaultEmbed(event);
         latinBuilder.setTitle("DEPARTURE - GALNERYUS")
                 .addField("Youtube Link: ", "[Here](" + DepartureSong.DEPARTURE_YOUTUBE_LINK + ")", false)
                 .addField("Spotify Link: ", "[Here](" + DepartureSong.DEPARTURE_SPOTIFY_LINK + ")", false)
                 .addField("LYRICS (Romanized)", "", false);
 
-        final EmbedBuilder japaneseBuilder = Config.getDefaultEmbed();
+        final EmbedBuilder japaneseBuilder = Config.getDefaultEmbed(event);
         japaneseBuilder.setTitle("DEPARTURE - GALNERYUS")
                 .addField("Youtube Link: ", "[Here](" + DepartureSong.DEPARTURE_YOUTUBE_LINK + ")", false)
                 .addField("Spotify Link: ", "[Here](" + DepartureSong.DEPARTURE_SPOTIFY_LINK + ")", false)

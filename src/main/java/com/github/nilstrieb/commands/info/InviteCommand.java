@@ -22,15 +22,13 @@ public class InviteCommand extends Command {
     public void called(MessageReceivedEvent event, String args) {
 
         User nils = event.getJDA().getUserById(Config.NILS_ID);
-        User killua = event.getJDA().getUserById(Config.THIS_ID);
         Objects.requireNonNull(nils, "user nils not found");
-        Objects.requireNonNull(killua, "user killua not found");
 
-        EmbedBuilder builder = Config.getDefaultEmbed();
-        builder.setFooter("This bot was made by " + nils.getAsTag())
-                .setTitle("Invite me!")
-                .setThumbnail(killua.getAvatarUrl())
-                .addField("", "[Invite]" + INVITE_LINK, true);
+        EmbedBuilder builder = Config.getDefaultEmbed(event);
+        builder.setTitle("Invite Killua to your server!")
+                .addField("Invite Link", "[Invite]" + INVITE_LINK, true)
+                .setFooter("This bot was made by " + nils.getAsTag());
+
         reply(event, builder.build());
     }
 }

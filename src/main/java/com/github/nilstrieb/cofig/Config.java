@@ -1,9 +1,12 @@
 package com.github.nilstrieb.cofig;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Config {
     public static final String PREFIX = "kil ";
@@ -15,6 +18,18 @@ public class Config {
 
         EmbedBuilder builder = new EmbedBuilder();
         builder.setColor(Config.DEFAULT_COLOR);
+        return builder;
+    }
+
+    public static EmbedBuilder getDefaultEmbed(MessageReceivedEvent event) {
+        User killua = event.getJDA().getUserById(Config.THIS_ID);
+        Objects.requireNonNull(killua, "user killua not found");
+
+
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setColor(Config.DEFAULT_COLOR).
+                setThumbnail(killua.getAvatarUrl())
+                .setFooter("KilluaBot");
         return builder;
     }
 }
