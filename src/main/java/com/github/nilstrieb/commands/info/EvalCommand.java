@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class EvalCommand extends Command {
     public EvalCommand() {
-        super("eval", "no", "", "<command>", true);
+        super("eval", true);
     }
 
     @Override

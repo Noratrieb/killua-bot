@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 public class CommandListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        System.out.println(ConsoleColors.CYAN + "[CListener] Received message: '" + event.getMessage().getContentRaw() + "'" + ConsoleColors.RESET);
         if (!event.getAuthor().isBot()) {
+            System.out.println(ConsoleColors.CYAN + "[CListener] Received message: '" + event.getMessage().getContentRaw() + "'" + ConsoleColors.RESET);
             CommandHandler.call(event);
         }
     }

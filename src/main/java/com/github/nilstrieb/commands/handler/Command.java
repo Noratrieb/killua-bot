@@ -13,24 +13,66 @@ public abstract class Command {
     private final String description;
     private final String exampleUsage;
     private final String arguments;
+    private final String detailDescription;
     private final CommandParser parser = CommandParser.getInstance();
 
-    public Command(String name, String description, String exampleUsage, String arguments, boolean hidden) {
+
+    /**
+     * New command
+     * @param name command name
+     * @param description quick description
+     * @param exampleUsage example usage without the prefix
+     * @param arguments all arguments (() -> optional. <> -> required
+     * @param detailDescription a detailed description
+     */
+    public Command(String name, String description, String exampleUsage, String arguments, String detailDescription) {
         this.name = name;
         this.description = description;
         this.exampleUsage = exampleUsage;
         this.arguments = arguments;
+        this.detailDescription = detailDescription;
+        CommandHandler.addCommand(name, this, false);
+    }
+
+    /**
+     * New command
+     * @param name command name
+     * @param description quick description
+     * @param exampleUsage example usage without the prefix
+     * @param arguments all arguments (() -> optional. <> -> required
+     */
+    public Command(String name, String description, String exampleUsage, String arguments){
+        this(name, description, exampleUsage, arguments, "");
+    }
+
+    /**
+     * New command
+     * @param name command name
+     * @param description quick description
+     */
+    public Command(String name, String description) {
+        this(name, description, name, "", "");
+    }
+
+    /**
+     * Hidden command
+     * @param name name
+     * @param hidden should always be true
+     */
+    public Command(String name, boolean hidden) {
+        this.name = name;
+        this.description = "";
+        this.exampleUsage = "";
+        this.arguments = "";
+        this.detailDescription = "";
         CommandHandler.addCommand(name, this, hidden);
     }
 
-    public Command(String name, String description, String exampleUsage, String arguments) {
-        this(name, description, exampleUsage, arguments, false);
-    }
-
-    public Command(String name, String description) {
-        this(name, description, name, "", false);
-    }
-
+    /**
+     * The method called by the CommandHandler
+     * @param event The event
+     * @param args The arguments (after the command and an optional whitespace)
+     */
     public abstract void called(MessageReceivedEvent event, String args);
 
     protected void reply(MessageReceivedEvent event, String message) {
@@ -88,5 +130,9 @@ public abstract class Command {
 
     public String getArguments() {
         return arguments;
+    }
+
+    public String getDetailDescription() {
+        return detailDescription;
     }
 }

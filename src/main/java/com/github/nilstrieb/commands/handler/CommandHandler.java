@@ -90,7 +90,8 @@ public class CommandHandler {
                     .setTitle("Killua help: " + cmd.getName())
                     .addField("Name", cmd.getName(), true)
                     .addField("Description", cmd.getDescription(), true)
-                    .addField("Example usage", "`" + cmd.getExampleUsage() + "`", true);
+                    .addField("Example usage", "`" + cmd.getExampleUsage() + "`", true)
+                    .addField("Detail:", cmd.getDetailDescription(), true);
 
             if (!cmd.getArguments().equals("")) {
                 builder.addField("Arguments", "`" + cmd.getArguments() + "`", true);
