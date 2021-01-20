@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public abstract class Command {
+public abstract class Command extends MessageSender{
     private final String name;
     private final String description;
     private final String exampleUsage;
@@ -74,47 +74,6 @@ public abstract class Command {
      * @param args The arguments (after the command and an optional whitespace)
      */
     public abstract void called(MessageReceivedEvent event, String args);
-
-    protected void reply(MessageReceivedEvent event, String message) {
-        if (!message.equals("")) {
-            event.getTextChannel().sendMessage(message).queue();
-        }
-    }
-
-
-    protected void reply(MessageReceivedEvent event, MessageEmbed embed) {
-        if (!embed.isEmpty()) {
-            event.getTextChannel().sendMessage(embed).queue();
-        }
-    }
-
-    protected void reply(MessageReceivedEvent event, MessageEmbed... embeds) {
-        if (!embeds[0].isEmpty()) {
-            event.getTextChannel().sendMessage(embeds[0]).queue(message -> new MultiPageEmbed(message, embeds));
-        }
-    }
-
-    protected void reply(MessageReceivedEvent event, String emote1, String emote2, MessageEmbed... embeds) {
-        if (!embeds[0].isEmpty()) {
-            event.getTextChannel().sendMessage(embeds[0]).queue(message -> new MultiPageEmbed(message, emote1, emote2, embeds));
-        }
-    }
-
-    protected void deleteMsg(MessageReceivedEvent event, long delay) {
-        new Timer().schedule(
-                new TimerTask() {
-                    @Override
-                    public void run() {
-                        event.getMessage().delete().queue();
-                    }
-                }, delay
-        );
-    }
-
-    protected void deleteMsg(MessageReceivedEvent event) {
-        event.getMessage().delete().queue();
-    }
-
 
     public String getName() {
         return name;

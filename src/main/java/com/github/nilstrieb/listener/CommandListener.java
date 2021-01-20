@@ -10,7 +10,8 @@ public class CommandListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getAuthor().isBot()) {
-            System.out.println(ConsoleColors.CYAN + "[CListener] Received message: '" + event.getMessage().getContentRaw() + "'" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.CYAN + "[CListener] Received message: '" +
+                    event.getMessage().getContentRaw() + "' by " + event.getAuthor().getAsTag() + ConsoleColors.RESET);
             CommandHandler.call(event);
         }
     }

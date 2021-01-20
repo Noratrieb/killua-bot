@@ -1,25 +1,21 @@
 package com.github.nilstrieb.sections;
 
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import com.github.nilstrieb.commands.handler.MessageSender;
 
-import java.util.HashMap;
-
-public abstract class Section implements ChannelListener{
-    private long textChannelID;
-    private long userID;
-    private boolean multiUser;
+public abstract class Section extends MessageSender implements ChannelListener{
+    private final long textChannelID;
+    private final long userID;
 
     public Section(long textChannelID, long userID) {
         this.textChannelID = textChannelID;
         this.userID = userID;
-        this.multiUser = false;
 
         ChannelMessageEventManager.addListener(this, textChannelID);
     }
 
     public Section(long textChannelID) {
         this.textChannelID = textChannelID;
-        this.multiUser = true;
+        this.userID = 0;
     }
 
     @Override

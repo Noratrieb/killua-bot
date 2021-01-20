@@ -32,7 +32,7 @@ public class TriviaQuestionData {
                 "He didn't die on Greed Island", "Hisoka killed him with a card to the neck", "He lost too muich blood when Genthru blew his arm of", "He killed himself after Killuas death"));
         add(new TriviaQuestion("How many doors are there at the Testing Gate of the Zoldyck Family?", 0, Arc.ZOLDYCK_FAMILY,
                 "7", "5", "12", "8"));
-        add(new TriviaQuestion("What was Gon's aim after Killua left him alone playing with the Chairman Netero", 1, Arc.EXAM,
+        add(new TriviaQuestion("What was Gon's aim after Killua left him alone playing with the Chairman Netero?", 1, Arc.EXAM,
                 "Get the ball", "Make Netero use his right hand", "Make Netero use his left leg", "Let Netero drop the ball"));
         add(new TriviaQuestion("What did Tonpa mix into the drink?", 2, Arc.EXAM,
                 "Sleeping pills", "Headache tabletsschla", "Laxative", "Rat poison"));

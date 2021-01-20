@@ -1,9 +1,13 @@
 package com.github.nilstrieb.commands.fun;
 
+import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
 import com.github.nilstrieb.sections.ChannelMessageEventManager;
 import com.github.nilstrieb.sections.Section;
+import com.github.nilstrieb.util.trivia.Arc;
+import com.github.nilstrieb.util.trivia.TriviaQuestion;
 import com.github.nilstrieb.util.trivia.TriviaQuestionData;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class TriviaCommand extends Command {
@@ -19,26 +23,68 @@ public class TriviaCommand extends Command {
                 3 Yorknew City arc
                 4 Greed Island arc
                 5 Chimera Ant arc
-                6 Election arc""
+                6 Election arc
                 """);
     }
 
     @Override
     public void called(MessageReceivedEvent event, String args) {
-        int arc = 6;
+        int arc = 0;
         try {
             arc = Integer.parseInt(args);
         } catch (NumberFormatException ignored) {
         }
 
-        reply(event, TriviaQuestionData.getQuestion(arc).getQuestion());
+        TriviaQuestion question = TriviaQuestionData.getQuestion(arc);
+        StringBuilder answers = new StringBuilder();
+        for (int i = 0; i < question.getAnswers().length; i++) {
+            answers.append(i).append(". ").append(question.getAnswers()[i]).append("\n");
+        }
+        EmbedBuilder builder = Config.getDefaultEmbed(event)
+                .addField(question.getQuestion(), answers.toString(), false);
 
-        new Section(event.getTextChannel().getIdLong(), 414755070161453076L) {
-            @Override
-            public void messageReceived(MessageReceivedEvent event) {
-                event.getTextChannel().sendMessage("hallo ich bin killua").queue();
-                ChannelMessageEventManager.removeListener(this);
+        reply(event, builder.build());
+        new TriviaSection(event.getTextChannel().getIdLong(), event.getAuthor().getIdLong(), question);
+    }
+
+
+    private static class TriviaSection extends Section {
+        private final TriviaQuestion question;
+
+        public TriviaSection(long textChannelID, long userID, TriviaQuestion question) {
+            super(textChannelID, userID);
+            this.question = question;
+        }
+
+        @Override
+        public void messageReceived(MessageReceivedEvent event) {
+            String msg = event.getMessage().getContentRaw().toLowerCase();
+            String answer;
+
+            String correctAnswer = question.getAnswers()[question.getCorrectAnswer()];
+            if (correctAnswer.equals(msg) || msg.equals(question.getCorrectAnswer() + ".")) {
+                answer = "Correct!";
+            } else {
+                try {
+                    if (Integer.parseInt(msg) == question.getCorrectAnswer()) {
+                        answer = "Correct!";
+                    } else {
+                        answer = "False!";
+                    }
+                } catch (NumberFormatException e) {
+                    answer = "False!";
+                }
             }
-        };
+
+            EmbedBuilder builder = Config.getDefaultEmbed(event)
+                    .setTitle(answer)
+                    .setThumbnail(null)
+                    .addField("Correct answer", correctAnswer, false);
+            if (question.getArc() == Arc.EXAM) {
+                builder.setFooter("Tip: Use " + Config.PREFIX + "help trivia for more questions.");
+            }
+            reply(event, builder.build());
+            ChannelMessageEventManager.removeListener(this);
+        }
     }
 }
