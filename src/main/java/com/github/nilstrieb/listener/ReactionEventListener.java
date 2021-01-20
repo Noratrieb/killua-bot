@@ -11,15 +11,23 @@ import java.util.Objects;
 public class ReactionEventListener extends ListenerAdapter {
     @Override
     public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
-        if (!Objects.requireNonNull(event.getUser(), "message author is null").isBot()) {
-            ReactionEventManager.onReactionAdd(event);
+        if(event.getUser() == null){
+            System.err.println("[ReactionEventListener] ADD Reaction User is null. Message: " + event.getMessageId() + " emote:" + event.getReactionEmote());
+        } else {
+            if (!event.getUser().isBot()) {
+                ReactionEventManager.onReactionAdd(event);
+            }
         }
     }
 
     @Override
     public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
-        if (!Objects.requireNonNull(event.getUser(), "message author is null").isBot()) {
-            ReactionEventManager.onReactionRemove(event);
+        if(event.getUser() == null){
+            System.err.println("[ReactionEventListener] REMOVE Reaction User is null. Message: " + event.getMessageId() + " emote:" + event.getReactionEmote());
+        } else {
+            if (!event.getUser().isBot()) {
+                ReactionEventManager.onReactionRemove(event);
+            }
         }
     }
 }

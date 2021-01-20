@@ -26,4 +26,8 @@ public class KilluaQuotes {
     public static String getRandomQuote() {
         return quotes[random.nextInt(quotes.length)];
     }
+
+    public static String[] getAllQuotes() {
+        return quotes;
+    }
 }

@@ -23,32 +23,38 @@ public abstract class Command {
         CommandHandler.addCommand(name, this, hidden);
     }
 
-    public Command(String name, String description, String exampleUsage, String arguments){
+    public Command(String name, String description, String exampleUsage, String arguments) {
         this(name, description, exampleUsage, arguments, false);
     }
 
-    public Command(String name, String description){
+    public Command(String name, String description) {
         this(name, description, name, "", false);
     }
 
     public abstract void called(MessageReceivedEvent event, String args);
 
     protected void reply(MessageReceivedEvent event, String message) {
-        if(!message.equals("")){
+        if (!message.equals("")) {
             event.getTextChannel().sendMessage(message).queue();
         }
     }
 
 
     protected void reply(MessageReceivedEvent event, MessageEmbed embed) {
-        if(!embed.isEmpty()){
+        if (!embed.isEmpty()) {
             event.getTextChannel().sendMessage(embed).queue();
         }
     }
 
-    protected void reply(MessageReceivedEvent event, MessageEmbed ... embeds){
-        if(!embeds[0].isEmpty()){
+    protected void reply(MessageReceivedEvent event, MessageEmbed... embeds) {
+        if (!embeds[0].isEmpty()) {
             event.getTextChannel().sendMessage(embeds[0]).queue(message -> new MultiPageEmbed(message, embeds));
+        }
+    }
+
+    protected void reply(MessageReceivedEvent event, String emote1, String emote2, MessageEmbed... embeds) {
+        if (!embeds[0].isEmpty()) {
+            event.getTextChannel().sendMessage(embeds[0]).queue(message -> new MultiPageEmbed(message, emote1, emote2, embeds));
         }
     }
 

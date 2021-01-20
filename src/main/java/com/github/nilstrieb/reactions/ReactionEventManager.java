@@ -1,5 +1,6 @@
 package com.github.nilstrieb.reactions;
 
+import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 
@@ -17,6 +18,8 @@ public class ReactionEventManager {
     }
 
     public static void onReactionAdd(MessageReactionAddEvent event){
+        System.out.println(ConsoleColors.PURPLE + "[ReactionEventManager] Reaction added: " + event.getReactionEmote() +
+                " by " + event.getUser().getAsTag() + ConsoleColors.RESET);
         long message = event.getMessageIdLong();
         ReactionListener listener = currentReactions.get(message);
         if (listener != null) {
@@ -25,6 +28,8 @@ public class ReactionEventManager {
     }
 
     public static void onReactionRemove(MessageReactionRemoveEvent event){
+        System.out.println(ConsoleColors.PURPLE + "[ReactionEventManager] Reaction removed: " + event.getReactionEmote() +
+                " by " + event.getUser().getAsTag() + ConsoleColors.RESET);
         long message = event.getMessageIdLong();
         ReactionListener listener = currentReactions.get(message);
         if (listener != null) {

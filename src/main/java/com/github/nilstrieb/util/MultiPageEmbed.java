@@ -10,8 +10,8 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import java.util.Objects;
 
 public class MultiPageEmbed implements ReactionListener {
-    private static final String NEXT_PAGE_DEFAULT_REACTION = "\u27a1";
-    private static final String PREVIOUS_PAGE_DEFAULT_REACTION = "\u2b05";
+    private static final String NEXT_PAGE_DEFAULT_REACTION = "\u25b6\ufe0f";
+    private static final String PREVIOUS_PAGE_DEFAULT_REACTION = "\u25c0\ufe0f";
 
     private final Message message;
     private final MessageEmbed[] pages;

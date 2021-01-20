@@ -1,6 +1,7 @@
 package com.github.nilstrieb.commands.handler;
 
 import com.github.nilstrieb.cofig.Config;
+import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.Event;
@@ -31,12 +32,10 @@ public class CommandHandler {
         if (event.getMessage().getContentRaw().toLowerCase().startsWith(Config.PREFIX)) {
             String[] split = parser.splitOffCommandName(event.getMessage().getContentRaw());
             String command = split[0];
-            System.out.println("[CHandler] cmd: '" + command + "'" + " args: '" + split[1] + "'");
+            System.out.println(ConsoleColors.GREEN + "[CHandler] cmd: '" + command + "'" + " args: '" + split[1] + "'" + ConsoleColors.RESET);
             if (commands.containsKey(command)) {
-                System.out.println("[CHandler] command exists: " + command);
                 commands.get(command).called(event, split[1]);
             } else if (hiddenCommands.containsKey(command)) {
-                System.out.println("[CHandler] hidden command exists: " + command);
                 hiddenCommands.get(command).called(event, split[1]);
             }
         }
