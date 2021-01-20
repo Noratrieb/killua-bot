@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/*
+------------------------------------------------------------------------------
+|                                                                            |
+|                         HXH SPOILER WARING                                 |
+|                                                                            |
+|                 CONTINUE READING AT YOUR ON RISK                           |
+|                                                                            |
+------------------------------------------------------------------------------
+*/
+
 public class TriviaQuestionData {
     static List<List<TriviaQuestion>> questions = new ArrayList<>();
     private static final Random random = new Random();
