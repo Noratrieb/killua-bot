@@ -4,7 +4,7 @@ import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
 import com.github.nilstrieb.sections.ChannelMessageEventManager;
 import com.github.nilstrieb.sections.Section;
-import com.github.nilstrieb.util.trivia.Arc;
+import com.github.nilstrieb.util.ConsoleColors;
 import com.github.nilstrieb.util.trivia.TriviaQuestion;
 import com.github.nilstrieb.util.trivia.TriviaQuestionData;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -29,29 +29,41 @@ public class TriviaCommand extends Command {
 
     @Override
     public void called(MessageReceivedEvent event, String args) {
-        int arc = 0;
-        try {
-            arc = Integer.parseInt(args);
-        } catch (NumberFormatException ignored) {
-        }
 
-        TriviaQuestion question = TriviaQuestionData.getQuestion(arc);
-        StringBuilder answers = new StringBuilder();
-        for (int i = 0; i < question.getAnswers().length; i++) {
-            answers.append(i).append(". ").append(question.getAnswers()[i]).append("\n");
-        }
-        EmbedBuilder builder = Config.getDefaultEmbed(event)
-                .addField(question.getQuestion(), answers.toString(), false);
+        if (args.equals("dump") && event.getAuthor().getIdLong() == Config.NILS_ID) {
+            TriviaQuestionData.dump();
+            reply(event, "dumped");
+        } else if (args.startsWith("add")) {
+            reply(event, "Enter the Question");
+            new AddSection(event.getTextChannel().getIdLong(), event.getAuthor().getIdLong());
+        } else {
+            int arc = 0;
+            try {
+                arc = Integer.parseInt(args);
+            } catch (NumberFormatException ignored) {
+            }
 
-        reply(event, builder.build());
-        new TriviaSection(event.getTextChannel().getIdLong(), event.getAuthor().getIdLong(), question);
+            TriviaQuestion question = TriviaQuestionData.getQuestion(arc);
+            StringBuilder answers = new StringBuilder();
+            for (int i = 0; i < question.getAnswers().length; i++) {
+                answers.append(i).append(". ").append(question.getAnswers()[i]).append("\n");
+            }
+            EmbedBuilder builder = Config.getDefaultEmbed(event)
+                    .addField(question.getQuestion(), answers.toString(), false);
+
+            reply(event, builder.build());
+            new TriviaSection(event.getTextChannel().getIdLong(), event.getAuthor().getIdLong(), question);
+        }
     }
 
+///
+/// Trivia Section class
+///
 
     private static class TriviaSection extends Section {
         private final TriviaQuestion question;
 
-        public TriviaSection(long textChannelID, long userID, TriviaQuestion question) {
+        private TriviaSection(long textChannelID, long userID, TriviaQuestion question) {
             super(textChannelID, userID);
             this.question = question;
         }
@@ -80,11 +92,47 @@ public class TriviaCommand extends Command {
                     .setTitle(answer)
                     .setThumbnail(null)
                     .addField("Correct answer", correctAnswer, false);
-            if (question.getArc() == Arc.EXAM) {
+            if (question.getArc() == TriviaQuestion.EXAM) {
                 builder.setFooter("Tip: Use " + Config.PREFIX + "help trivia for more questions.");
             }
             reply(event, builder.build());
-            ChannelMessageEventManager.removeListener(this);
+            dispose();
+        }
+    }
+
+
+///
+/// Add question section class
+///
+
+    private static class AddSection extends Section {
+
+        private int status = 0;
+        private static final String[] messages = {"Enter all answers seperated by a ;", "Enter the correct answer index (starting at 0)",
+                "Enter the arc this question belongs to as a number (see " + Config.PREFIX + "help trivia for more info)"};
+        private String[] answers = new String[4];
+
+        private AddSection(long textChannelID, long userID) {
+            super(textChannelID, userID);
+        }
+
+        @Override
+        public void messageReceived(MessageReceivedEvent event) {
+            System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 121] Received Next Message: "
+                    + event.getMessage().getContentRaw() + " status: " + status + ConsoleColors.RESET);
+            answers[status] = event.getMessage().getContentRaw();
+            if (status >= 3) {
+                try {
+                    TriviaQuestionData.addNew(new TriviaQuestion(answers));
+                    reply(event, "Question successfully added for approval");
+                } catch (NumberFormatException e) {
+                    reply(event, "Error: " + e.getMessage());
+                }
+                dispose();
+            } else {
+                reply(event, messages[status]);
+            }
+            status++;
         }
     }
 }

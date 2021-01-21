@@ -1,12 +1,7 @@
 package com.github.nilstrieb.commands.handler;
 
 import com.github.nilstrieb.cofig.Config;
-import com.github.nilstrieb.util.MultiPageEmbed;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public abstract class Command extends MessageSender{
     private final String name;

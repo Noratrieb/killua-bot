@@ -1,0 +1,110 @@
+[
+  {
+    "question": "What\u0027s the name of Gons aunt?",
+    "answers": [
+      "Kite",
+      "Mito",
+      "Ging",
+      "Kurapika"
+    ],
+    "correctAnswer": 1,
+    "arc": 0
+  },
+  {
+    "question": "Why does Leorio want money?",
+    "answers": [
+      "To become a doctor",
+      "To send it to e-girls",
+      "So that others don\u0027t get it",
+      "To buy large quantities of drugs"
+    ],
+    "correctAnswer": 0,
+    "arc": 0
+  },
+  {
+    "question": "What was Gon\u0027s aim after Killua left him alone playing with the Chairman Netero?",
+    "answers": [
+      "Get the ball",
+      "Make Netero use his right hand",
+      "Make Netero use his left leg",
+      "Let Netero drop the ball"
+    ],
+    "correctAnswer": 1,
+    "arc": 0
+  },
+  {
+    "question": "What did Tonpa mix into the drink?",
+    "answers": [
+      "Sleeping pills",
+      "Headache tabletsschla",
+      "Laxative",
+      "Rat poison"
+    ],
+    "correctAnswer": 2,
+    "arc": 0
+  },
+  {
+    "question": "How many doors are there at the Testing Gate of the Zoldyck Family?",
+    "answers": [
+      "7",
+      "5",
+      "12",
+      "8"
+    ],
+    "correctAnswer": 0,
+    "arc": 1
+  },
+  {
+    "question": "What is Bisky\u0027s true form?",
+    "answers": [
+      "Boy",
+      "Big Woman",
+      "Little Girl"
+    ],
+    "correctAnswer": 1,
+    "arc": 4
+  },
+  {
+    "question": "How did Gon die on Greed Island?",
+    "answers": [
+      "He didn\u0027t die on Greed Island",
+      "Hisoka killed him with a card to the neck",
+      "He lost too muich blood when Genthru blew his arm of",
+      "He killed himself after Killuas death"
+    ],
+    "correctAnswer": 0,
+    "arc": 4
+  },
+  {
+    "question": "Where did Meruem die?",
+    "answers": [
+      "Volcano",
+      "In the desert with Netero",
+      "In the basement of the palace",
+      "In the womb of the queen"
+    ],
+    "correctAnswer": 2,
+    "arc": 5
+  },
+  {
+    "question": "Who is Alluka?",
+    "answers": [
+      "Gon\u0027s sister",
+      "A Zodiac",
+      "The \u0027dark\u0027 side of Nanika",
+      "Killua\u0027s sister"
+    ],
+    "correctAnswer": 3,
+    "arc": 6
+  },
+  {
+    "question": "What is Genthrus ability called?",
+    "answers": [
+      "Nuke",
+      "Massive Explosion",
+      "Little Flower"
+    ],
+    "correctAnswer": 2,
+    "arc": 4
+  }
+]

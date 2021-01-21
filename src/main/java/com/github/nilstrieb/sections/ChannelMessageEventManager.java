@@ -7,9 +7,9 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import java.util.*;
 
 public class ChannelMessageEventManager {
-    private static HashMap<Long, List<ChannelListener>> listeners = new HashMap<>();
-    private static List<ChannelListener> removeBuffer = new ArrayList<>();
-    private static Set<Long> removedChannels = new HashSet<>();
+    private static final HashMap<Long, List<ChannelListener>> listeners = new HashMap<>();
+    private static final List<ChannelListener> removeBuffer = new ArrayList<>();
+    private static final Set<Long> removedChannels = new HashSet<>();
 
     public static void addListener(ChannelListener listener, long channel) {
         if (!listeners.containsKey(channel)) {

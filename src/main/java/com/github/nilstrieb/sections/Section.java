@@ -18,6 +18,10 @@ public abstract class Section extends MessageSender implements ChannelListener{
         this.userID = 0;
     }
 
+    protected void dispose(){
+        ChannelMessageEventManager.removeListener(this);
+    }
+
     @Override
     public long getUserID() {
         return userID;
