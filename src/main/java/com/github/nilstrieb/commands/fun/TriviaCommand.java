@@ -34,7 +34,7 @@ public class TriviaCommand extends Command {
             TriviaQuestionData.dump();
             reply(event, "dumped");
         } else if (args.startsWith("add")) {
-            reply(event, "Enter the Question");
+            reply(event, "Enter the Question (Example: \"What is the name of Gons's father?\")");
             new AddSection(event.getTextChannel().getIdLong(), event.getAuthor().getIdLong());
         } else {
             int arc = 0;
@@ -108,8 +108,9 @@ public class TriviaCommand extends Command {
     private static class AddSection extends Section {
 
         private int status = 0;
-        private static final String[] messages = {"Enter all answers seperated by a ;", "Enter the correct answer index (starting at 0)",
-                "Enter the arc this question belongs to as a number (see " + Config.PREFIX + "help trivia for more info)"};
+        private static final String[] messages = {"Enter all answers seperated by a ; (Example: \"Ging;Mito;Gon\")",
+                "Enter the correct answer index starting at 0 (Example: \"0\")",
+                "Enter the arc this question belongs to as a number (see " + Config.PREFIX + "help trivia for more info) (Example: \"0\")"};
         private String[] answers = new String[4];
 
         private AddSection(long textChannelID, long userID) {
@@ -118,21 +119,24 @@ public class TriviaCommand extends Command {
 
         @Override
         public void messageReceived(MessageReceivedEvent event) {
-            System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 121] Received Next Message: "
-                    + event.getMessage().getContentRaw() + " status: " + status + ConsoleColors.RESET);
-            answers[status] = event.getMessage().getContentRaw();
-            if (status >= 3) {
-                try {
-                    TriviaQuestionData.addNew(new TriviaQuestion(answers));
-                    reply(event, "Question successfully added for approval");
-                } catch (NumberFormatException e) {
-                    reply(event, "Error: " + e.getMessage());
+            if(!event.getMessage().getContentRaw().startsWith(Config.PREFIX + "help")){
+                System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 121] Received Next Message: "
+                        + event.getMessage().getContentRaw() + " status: " + status + ConsoleColors.RESET);
+                answers[status] = event.getMessage().getContentRaw();
+                if (status >= 3) {
+                    try {
+                        TriviaQuestionData.addNew(new TriviaQuestion(answers));
+                        reply(event, "Question successfully added for approval");
+                    } catch (NumberFormatException e) {
+                        reply(event, "Error: " + e.getMessage());
+                    }
+                    dispose();
+                } else {
+                    reply(event, messages[status]);
                 }
-                dispose();
-            } else {
-                reply(event, messages[status]);
+                status++;
+                deleteMsg(event);
             }
-            status++;
         }
     }
 }
