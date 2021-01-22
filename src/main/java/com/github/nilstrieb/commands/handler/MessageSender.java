@@ -23,13 +23,13 @@ public abstract class MessageSender {
 
     protected void reply(MessageReceivedEvent event, MessageEmbed... embeds) {
         if (!embeds[0].isEmpty()) {
-            event.getTextChannel().sendMessage(embeds[0]).queue(message -> new MultiPageEmbed(message, embeds));
+            new MultiPageEmbed(event, embeds);
         }
     }
 
     protected void reply(MessageReceivedEvent event, String emote1, String emote2, MessageEmbed... embeds) {
         if (!embeds[0].isEmpty()) {
-            event.getTextChannel().sendMessage(embeds[0]).queue(message -> new MultiPageEmbed(message, emote1, emote2, embeds));
+            new MultiPageEmbed(event, emote1, emote2, embeds);
         }
     }
 

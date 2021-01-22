@@ -2,6 +2,7 @@ package com.github.nilstrieb.util.trivia;
 
 import com.github.nilstrieb.util.ConsoleColors;
 import com.google.gson.Gson;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -77,12 +78,6 @@ public class TriviaQuestionData {
     public static void add(TriviaQuestion triviaQuestion) {
         questions.get(triviaQuestion.getArc()).add(triviaQuestion);
         saveJSONFromAll("trivia_questions.json");
-    }
-
-    public static void addNew(TriviaQuestion triviaQuestion) {
-        newQuestions.add(triviaQuestion);
-        TriviaQuestion[] array = new TriviaQuestion[newQuestions.size()];
-        saveJSON("new_trivia_questions.json", newQuestions.toArray(array));
     }
 
     public static TriviaQuestion getQuestion(int toArc) {

@@ -1,40 +1,38 @@
 package com.github.nilstrieb.util;
 
-import com.github.nilstrieb.reactions.ReactionEventManager;
-import com.github.nilstrieb.reactions.ReactionListener;
+import com.github.nilstrieb.reactions.ReactionAdapter;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 
 import java.util.Objects;
 
-public class MultiPageEmbed implements ReactionListener {
+public class MultiPageEmbed extends ReactionAdapter {
     private static final String NEXT_PAGE_DEFAULT_REACTION = "\u25b6\ufe0f";
     private static final String PREVIOUS_PAGE_DEFAULT_REACTION = "\u25c0\ufe0f";
 
-    private final Message message;
+    private Message message;
     private final MessageEmbed[] pages;
     private int currentState;
     private final String prevReaction;
     private final String nextReaction;
 
-    public MultiPageEmbed(Message message, MessageEmbed... pages) {
-        this(message, PREVIOUS_PAGE_DEFAULT_REACTION, NEXT_PAGE_DEFAULT_REACTION, pages);
+
+    public MultiPageEmbed(MessageReceivedEvent event, MessageEmbed... pages) {
+        this(event, PREVIOUS_PAGE_DEFAULT_REACTION, NEXT_PAGE_DEFAULT_REACTION, pages);
     }
 
-    public MultiPageEmbed(Message message, String prevReaction, String nextReaction, MessageEmbed... pages) {
-        this.message = message;
+    public MultiPageEmbed(MessageReceivedEvent event, String prevReaction, String nextReaction, MessageEmbed[] pages) {
         this.prevReaction = prevReaction;
         this.nextReaction = nextReaction;
-
         this.pages = pages;
-        currentState = 0;
-
-        message.addReaction(prevReaction).queue();
-        message.addReaction(nextReaction).queue();
-
-        ReactionEventManager.addMessage(message.getIdLong(), this);
+        event.getTextChannel().sendMessage(pages[0]).queue(message1 -> {
+            message = message1;
+            message.addReaction(prevReaction).queue();
+            message.addReaction(nextReaction).queue();
+            create(message1.getIdLong());
+        });
     }
 
     @Override
@@ -55,12 +53,7 @@ public class MultiPageEmbed implements ReactionListener {
                 }
             }
         }
-        Objects.requireNonNull(event.getUser(), "[MultiPageEmbed] reaction user was null");
+        Objects.requireNonNull(event.getUser(), "Reaction user was null");
         event.getReaction().removeReaction(event.getUser()).queue();
-    }
-
-    @Override
-    public void onReactionRemoved(MessageReactionRemoveEvent event) {
-        //leave empty
     }
 }

@@ -13,7 +13,7 @@ public class ReactionEventManager {
         currentReactions.put(message, listener);
     }
 
-    public static void removeMessage(String message){
+    public static void removeMessage(Long message){
         currentReactions.remove(message);
     }
 

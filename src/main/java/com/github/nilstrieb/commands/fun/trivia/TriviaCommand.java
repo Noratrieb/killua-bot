@@ -1,8 +1,7 @@
-package com.github.nilstrieb.commands.fun;
+package com.github.nilstrieb.commands.fun.trivia;
 
 import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
-import com.github.nilstrieb.sections.ChannelMessageEventManager;
 import com.github.nilstrieb.sections.Section;
 import com.github.nilstrieb.util.ConsoleColors;
 import com.github.nilstrieb.util.trivia.TriviaQuestion;
@@ -13,7 +12,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class TriviaCommand extends Command {
 
     public TriviaCommand() {
-        super("trivia", "Answer random Trivia questions!", "trivia 0", "(maximal arc (inclusive) as a number)", """
+        super("trivia", "Answer random Trivia questions!", "trivia 0", "(maximal arc (inclusive) as a number) or (add)", """
                 Answer random trivia questions by the community!
                 You can choose the last arc the questions will be from to avoid spoilers
                 Arcs:
@@ -24,7 +23,8 @@ public class TriviaCommand extends Command {
                 4 Greed Island arc
                 5 Chimera Ant arc
                 6 Election arc
-                """);
+                
+                Add questions using `""" + Config.PREFIX + "trivia add`");
     }
 
     @Override
@@ -110,8 +110,17 @@ public class TriviaCommand extends Command {
         private int status = 0;
         private static final String[] messages = {"Enter all answers seperated by a ; (Example: \"Ging;Mito;Gon\")",
                 "Enter the correct answer index starting at 0 (Example: \"0\")",
-                "Enter the arc this question belongs to as a number (see " + Config.PREFIX + "help trivia for more info) (Example: \"0\")"};
-        private String[] answers = new String[4];
+                """
+                Enter the arc this question belongs to as a number (Example: "0")
+                EXAM = 0
+                ZOLDYCK_FAMILY = 1
+                HEAVENS_ARENA = 2
+                YORKNEW_CITY = 3
+                GREED_ISLAND = 4
+                CHIMERA_ANT = 5
+                ELECTION = 6
+                """};
+        private final String[] answers = new String[4];
 
         private AddSection(long textChannelID, long userID) {
             super(textChannelID, userID);
@@ -119,13 +128,13 @@ public class TriviaCommand extends Command {
 
         @Override
         public void messageReceived(MessageReceivedEvent event) {
-            if(!event.getMessage().getContentRaw().startsWith(Config.PREFIX + "help")){
+            if (!event.getMessage().getContentRaw().startsWith(Config.PREFIX + "help")) {
                 System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 121] Received Next Message: "
                         + event.getMessage().getContentRaw() + " status: " + status + ConsoleColors.RESET);
                 answers[status] = event.getMessage().getContentRaw();
                 if (status >= 3) {
                     try {
-                        TriviaQuestionData.addNew(new TriviaQuestion(answers));
+                        new TriviaApproval(event, new TriviaQuestion(answers));
                         reply(event, "Question successfully added for approval");
                     } catch (NumberFormatException e) {
                         reply(event, "Error: " + e.getMessage());
