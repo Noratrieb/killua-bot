@@ -23,7 +23,7 @@ public class TriviaCommand extends Command {
                 4 Greed Island arc
                 5 Chimera Ant arc
                 6 Election arc
-                
+                                
                 Add questions using `""" + Config.PREFIX + "trivia add`");
     }
 
@@ -128,7 +128,14 @@ public class TriviaCommand extends Command {
 
         @Override
         public void messageReceived(MessageReceivedEvent event) {
-            if (!event.getMessage().getContentRaw().startsWith(Config.PREFIX + "help")) {
+            if (event.getAuthor().getIdLong() == Config.NILS_ID && event.getMessage().getContentRaw().startsWith("debug")) {
+                answers[0] = "question";
+                answers[1] = "a;b;c;d";
+                answers[2] = "0";
+                answers[3] = "0";
+                new TriviaApproval(event, new TriviaQuestion(answers));
+            } else {
+
                 System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 121] Received Next Message: "
                         + event.getMessage().getContentRaw() + " status: " + status + ConsoleColors.RESET);
                 answers[status] = event.getMessage().getContentRaw();

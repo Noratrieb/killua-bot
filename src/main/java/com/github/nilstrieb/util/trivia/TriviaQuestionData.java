@@ -2,7 +2,6 @@ package com.github.nilstrieb.util.trivia;
 
 import com.github.nilstrieb.util.ConsoleColors;
 import com.google.gson.Gson;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,8 +10,9 @@ import java.util.Random;
 
 public class TriviaQuestionData {
     static List<List<TriviaQuestion>> questions = new ArrayList<>();
-    private static final List<TriviaQuestion> newQuestions = new ArrayList<>();
     private static final Random random = new Random();
+
+    private static final String JSON_PATH = "trivia_questions.json";
 
     static {
         questions.add(new ArrayList<>());
@@ -22,28 +22,34 @@ public class TriviaQuestionData {
         questions.add(new ArrayList<>());
         questions.add(new ArrayList<>());
         questions.add(new ArrayList<>());
+        System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 25] JSON File Path: " + new File(JSON_PATH + "hallo").getAbsolutePath() + ConsoleColors.RESET);
         loadJSON();
     }
 
     private static void loadJSON() {
+
+        System.out.println();
+
         StringBuilder json = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(
-                new FileReader("trivia_questions.json"))) {
+                new FileReader(JSON_PATH))) {
             String line = bufferedReader.readLine();
             while (line != null) {
                 json.append(line);
                 line = bufferedReader.readLine();
             }
+
+
+            Gson gson = new Gson();
+            TriviaQuestion[] array = gson.fromJson(json.toString(), TriviaQuestion[].class);
+
+            for (TriviaQuestion triviaQuestion : array) {
+                questions.get(triviaQuestion.getArc()).add(triviaQuestion);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        Gson gson = new Gson();
-        TriviaQuestion[] array = gson.fromJson(json.toString(), TriviaQuestion[].class);
-
-        for (TriviaQuestion triviaQuestion : array) {
-            questions.get(triviaQuestion.getArc()).add(triviaQuestion);
-        }
     }
 
     private static void saveJSON(String path, TriviaQuestion[] array) {
@@ -77,7 +83,7 @@ public class TriviaQuestionData {
 
     public static void add(TriviaQuestion triviaQuestion) {
         questions.get(triviaQuestion.getArc()).add(triviaQuestion);
-        saveJSONFromAll("trivia_questions.json");
+        saveJSONFromAll(JSON_PATH);
     }
 
     public static TriviaQuestion getQuestion(int toArc) {

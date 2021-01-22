@@ -13,12 +13,17 @@ import com.github.nilstrieb.listener.ChannelMessageListener;
 import com.github.nilstrieb.listener.CommandListener;
 import com.github.nilstrieb.listener.ReactionEventListener;
 import com.github.nilstrieb.listener.StartUpListener;
+import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.utils.Compression;
 
 import javax.security.auth.login.LoginException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Main {
 
@@ -31,6 +36,37 @@ public class Main {
 
         JDA jda = builder.build();
         setupCommands();
+
+/*        Thread t = new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
+            String line = scanner.nextLine();
+            while (!line.equals("exit")) {
+                if (line.startsWith("send")) {
+                    System.out.println("GuildID");
+                    line = scanner.nextLine();
+                    Guild guild = jda.getGuildById(line);
+                    if (guild != null) {
+                        System.out.println("TextChannelID");
+                        line = scanner.nextLine();
+                        TextChannel textChannel = guild.getTextChannelById(line);
+                        if (textChannel != null) {
+                            System.out.println("Message");
+                            line = scanner.nextLine();
+                            if (!line.equals("")) {
+                                textChannel.sendMessage(line).queue();
+                            }
+                        }
+                    }
+                } else if(line.startsWith("filetest")){
+                    File f = new File("hallo.eric");
+                    System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 80] File path " + f.getAbsolutePath() + ConsoleColors.RESET);
+                }
+
+                line = scanner.nextLine();
+            }
+            System.exit(0);
+        });
+        t.start();*/
     }
 
     private static void setupCommands() {
