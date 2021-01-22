@@ -27,7 +27,7 @@ public class ChannelMessageEventManager {
     public static void onMessageReceived(MessageReceivedEvent event) {
         long id = event.getTextChannel().getIdLong();
         if (listeners.containsKey(id)) {
-            System.out.println(ConsoleColors.YELLOW + "[ChannelMsgEvtMgr] Message in listened channel " +
+            System.out.println(ConsoleColors.YELLOW + "[ChannelMsgEvtMgr 30] Message in listened channel " +
                     event.getTextChannel().getName() + " by " + event.getAuthor().getAsTag() + ": " + event.getMessage().getContentRaw() + ConsoleColors.RESET);
             List<ChannelListener> list = listeners.get(id);
             for (ChannelListener channelListener : list) {

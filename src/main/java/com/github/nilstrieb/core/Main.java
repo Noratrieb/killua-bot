@@ -37,10 +37,10 @@ public class Main {
         JDA jda = builder.build();
         setupCommands();
 
-/*        Thread t = new Thread(() -> {
+        Thread t = new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
-            while (!line.equals("exit")) {
+            while (!line.equals("exit") && !line.equals("quit")) {
                 if (line.startsWith("send")) {
                     System.out.println("GuildID");
                     line = scanner.nextLine();
@@ -57,16 +57,13 @@ public class Main {
                             }
                         }
                     }
-                } else if(line.startsWith("filetest")){
-                    File f = new File("hallo.eric");
-                    System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 80] File path " + f.getAbsolutePath() + ConsoleColors.RESET);
                 }
 
                 line = scanner.nextLine();
             }
             System.exit(0);
         });
-        t.start();*/
+        t.start();
     }
 
     private static void setupCommands() {

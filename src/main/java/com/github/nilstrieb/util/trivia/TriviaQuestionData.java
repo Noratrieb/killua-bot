@@ -4,6 +4,7 @@ import com.github.nilstrieb.util.ConsoleColors;
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,7 +13,18 @@ public class TriviaQuestionData {
     static List<List<TriviaQuestion>> questions = new ArrayList<>();
     private static final Random random = new Random();
 
-    private static final String JSON_PATH = "trivia_questions.json";
+    private static String JSON_PATH_JAR;
+
+    static {
+        try {
+            JSON_PATH_JAR = new File(TriviaQuestionData.class.getProtectionDomain().getCodeSource()
+                .getLocation().toURI()).getPath().replaceAll("(.*\\\\).*?\\.jar", "$1") + "trivia_questions.json";;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+    private static final String JSON_PATH_INTELLIJ = "trivia_questions.json";
+    private static final String JSON_PATH = JSON_PATH_JAR;
 
     static {
         questions.add(new ArrayList<>());
@@ -22,13 +34,14 @@ public class TriviaQuestionData {
         questions.add(new ArrayList<>());
         questions.add(new ArrayList<>());
         questions.add(new ArrayList<>());
-        System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 25] JSON File Path: " + new File(JSON_PATH + "hallo").getAbsolutePath() + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 37] JSON File Path: " + new File(JSON_PATH + "hallo").getAbsolutePath() + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 38] JSON File Path: " + JSON_PATH+ ConsoleColors.RESET);
         loadJSON();
     }
 
     private static void loadJSON() {
 
-        System.out.println();
+        System.out.println("[TriviaQuestionData 44] Load JSON File");
 
         StringBuilder json = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(

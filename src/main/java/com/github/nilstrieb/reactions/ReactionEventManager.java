@@ -18,7 +18,7 @@ public class ReactionEventManager {
     }
 
     public static void onReactionAdd(MessageReactionAddEvent event){
-        System.out.println(ConsoleColors.PURPLE + "[ReactionEventManager] Reaction added: " + event.getReactionEmote() +
+        System.out.println(ConsoleColors.PURPLE + "[ReactionEventManager 21] Reaction added: " + event.getReactionEmote() +
                 " by " + event.getUser().getAsTag() + ConsoleColors.RESET);
         long message = event.getMessageIdLong();
         ReactionListener listener = currentReactions.get(message);
@@ -28,7 +28,7 @@ public class ReactionEventManager {
     }
 
     public static void onReactionRemove(MessageReactionRemoveEvent event){
-        System.out.println(ConsoleColors.PURPLE + "[ReactionEventManager] Reaction removed: " + event.getReactionEmote() +
+        System.out.println(ConsoleColors.PURPLE + "[ReactionEventManager 31] Reaction removed: " + event.getReactionEmote() +
                 " by " + event.getUser().getAsTag() + ConsoleColors.RESET);
         long message = event.getMessageIdLong();
         ReactionListener listener = currentReactions.get(message);

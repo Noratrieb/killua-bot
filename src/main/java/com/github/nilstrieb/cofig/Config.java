@@ -15,17 +15,11 @@ public class Config {
     public static final long KUKUROO_MOUNTAIN_ID = 799696420386504795L;
     public static final long TRIVIA_APPROVAL_CHANNEL_ID = 802244298774413312L;
 
-    public static EmbedBuilder getDefaultEmbed() {
-        EmbedBuilder builder = new EmbedBuilder();
-        builder.setColor(Config.DEFAULT_COLOR);
-        return builder;
-    }
-
     public static EmbedBuilder getDefaultEmbed(Event event) {
         User killua = event.getJDA().getUserById(THIS_ID);
         if (killua == null) {
             event.getJDA().retrieveUserById(THIS_ID).queue(user -> {
-                System.out.println("[Config] " + user.getAsTag() + " successfully retrieved.");
+                System.out.println("[Config 22] " + user.getAsTag() + " successfully retrieved.");
             });
             System.err.println("[Config] This bot user not cached. Retrieving user...");
 

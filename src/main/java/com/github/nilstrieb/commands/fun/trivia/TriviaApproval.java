@@ -10,8 +10,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 
-import java.util.Objects;
-
 public class TriviaApproval extends ReactionAdapter {
 
     public static final String APPROVE_EMOTE = "\u2705"; //✅
@@ -37,7 +35,7 @@ public class TriviaApproval extends ReactionAdapter {
             message.addReaction(DENY_EMOTE).queue();
             create(message.getIdLong());
             ReactionEventManager.addMessage(message.getIdLong(), this);
-            System.out.println(ConsoleColors.BLUE + "[TriviaApproval 32] Trivia Question registered for approval" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.BLUE + "[TriviaApproval 38] Trivia Question registered for approval" + ConsoleColors.RESET);
         });
     }
 
@@ -46,10 +44,10 @@ public class TriviaApproval extends ReactionAdapter {
         if (event.getUser() != null) {
             if (event.getUser().getIdLong() == Config.NILS_ID) {
                 String emote = event.getReaction().getReactionEmote().getName();
-                System.out.println(ConsoleColors.BLUE + "[TriviaApproval 46] Received Emote " + emote + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.BLUE + "[TriviaApproval 47] Received Emote " + emote + ConsoleColors.RESET);
                 if (emote.equals(APPROVE_EMOTE)) {
                     event.getTextChannel().sendMessage("Question approved.").queue();
-                    System.out.println(ConsoleColors.BLUE + "[TriviaApproval 55] Question Approved: " + question.getQuestion() + ConsoleColors.RESET);
+                    System.out.println(ConsoleColors.BLUE + "[TriviaApproval 50] Question Approved: " + question.getQuestion() + ConsoleColors.RESET);
                     TriviaQuestionData.add(question);
                     dispose();
                 } else if (emote.equals(DENY_EMOTE)) {

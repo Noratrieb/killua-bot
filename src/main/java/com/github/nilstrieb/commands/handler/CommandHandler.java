@@ -32,7 +32,7 @@ public class CommandHandler {
         if (event.getMessage().getContentRaw().toLowerCase().startsWith(Config.PREFIX)) {
             String[] split = parser.splitOffCommandName(event.getMessage().getContentRaw());
             String command = split[0];
-            System.out.println(ConsoleColors.GREEN + "[CHandler] cmd: '" + command + "'" + " args: '" + split[1] + "'" + ConsoleColors.RESET);
+            System.out.println(ConsoleColors.GREEN + "[CHandler 35] cmd: '" + command + "'" + " args: '" + split[1] + "'" + ConsoleColors.RESET);
             if (commands.containsKey(command)) {
                 commands.get(command).called(event, split[1]);
             } else if (hiddenCommands.containsKey(command)) {
@@ -75,7 +75,6 @@ public class CommandHandler {
             i++;
         }
 
-        System.out.println(Arrays.toString(builders));
         MessageEmbed[] messageEmbeds = new MessageEmbed[pages];
         for (i = 0; i < builders.length; i++) {
             messageEmbeds[i] = builders[i].build();
