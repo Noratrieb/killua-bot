@@ -17,7 +17,7 @@ public class ToukaCommand extends Command {
 
     @Override
     public void called(MessageReceivedEvent event, String args) {
-        event.getJDA().retrieveUserById(265849018662387712L).queue(yuki -> {
+        event.getJDA().retrieveUserById(Config.YUKI_ID).queue(yuki -> {
             event.getJDA().retrieveUserById(783720725848129566L).queue(touka -> {
                 EmbedBuilder builder = Config.getDefaultEmbed(event)
                         .setTitle("Invite the Touka bot")

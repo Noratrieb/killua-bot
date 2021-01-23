@@ -12,6 +12,7 @@ public class Config {
 
     public static final long THIS_ID = 801015254023798825L;
     public static final long NILS_ID = 414755070161453076L;
+    public static final long YUKI_ID = 265849018662387712L;
     public static final long KUKUROO_MOUNTAIN_ID = 799696420386504795L;
     public static final long TRIVIA_APPROVAL_CHANNEL_ID = 802244298774413312L;
 

@@ -24,7 +24,7 @@ public class TriviaQuestionData {
         }
     }
     private static final String JSON_PATH_INTELLIJ = "trivia_questions.json";
-    private static final String JSON_PATH = JSON_PATH_JAR;
+    private static final String JSON_PATH = JSON_PATH_INTELLIJ;
 
     static {
         questions.add(new ArrayList<>());
@@ -37,6 +37,10 @@ public class TriviaQuestionData {
         System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 37] JSON File Path: " + new File(JSON_PATH + "hallo").getAbsolutePath() + ConsoleColors.RESET);
         System.out.println(ConsoleColors.BLUE + "[TriviaQuestionData 38] JSON File Path: " + JSON_PATH+ ConsoleColors.RESET);
         loadJSON();
+    }
+
+    public static File getFile() {
+        return new File(JSON_PATH);
     }
 
     private static void loadJSON() {
@@ -127,6 +131,11 @@ public class TriviaQuestionData {
         return getTotalQuestions(questions.size() - 1);
     }
 
+
+    public static void reload() {
+        loadJSON();
+    }
+
     public static void dump() {
         int i = 0;
         for (List<TriviaQuestion> question : questions) {
@@ -138,4 +147,5 @@ public class TriviaQuestionData {
             i++;
         }
     }
+
 }
