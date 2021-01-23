@@ -1,13 +1,20 @@
 package com.github.nilstrieb.cofig;
 
+import com.github.nilstrieb.util.trivia.TriviaQuestionData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
 
 import java.awt.*;
+import java.io.File;
+import java.net.URISyntaxException;
 
 public class Config {
-    public static final String PREFIX = "kil ";
+    public static final String D_PREFIX = "kil ";
+    public static final String L_PREFIX = "k ";
+
+    public static final String PREFIX = L_PREFIX;
+
     public static final Color DEFAULT_COLOR = new Color(229, 201, 255);
 
     public static final long THIS_ID = 801015254023798825L;
@@ -15,6 +22,19 @@ public class Config {
     public static final long YUKI_ID = 265849018662387712L;
     public static final long KUKUROO_MOUNTAIN_ID = 799696420386504795L;
     public static final long TRIVIA_APPROVAL_CHANNEL_ID = 802244298774413312L;
+
+    private static String JSON_PATH_JAR;
+
+    static {
+        try {
+            JSON_PATH_JAR = new File(TriviaQuestionData.class.getProtectionDomain().getCodeSource()
+                    .getLocation().toURI()).getPath().replaceAll("(.*\\\\).*?\\.jar", "$1") + "trivia_questions.json";;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+    private static final String JSON_PATH_INTELLIJ = "trivia_questions.json";
+    public static final String JSON_PATH = JSON_PATH_INTELLIJ;
 
     public static EmbedBuilder getDefaultEmbed(Event event) {
         User killua = event.getJDA().getUserById(THIS_ID);

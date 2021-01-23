@@ -4,27 +4,17 @@ import com.github.nilstrieb.util.ConsoleColors;
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static com.github.nilstrieb.cofig.Config.JSON_PATH;
 
 public class TriviaQuestionData {
     static List<List<TriviaQuestion>> questions = new ArrayList<>();
     private static final Random random = new Random();
 
-    private static String JSON_PATH_JAR;
 
-    static {
-        try {
-            JSON_PATH_JAR = new File(TriviaQuestionData.class.getProtectionDomain().getCodeSource()
-                .getLocation().toURI()).getPath().replaceAll("(.*\\\\).*?\\.jar", "$1") + "trivia_questions.json";;
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-    private static final String JSON_PATH_INTELLIJ = "trivia_questions.json";
-    private static final String JSON_PATH = JSON_PATH_INTELLIJ;
 
     static {
         questions.add(new ArrayList<>());
@@ -69,11 +59,11 @@ public class TriviaQuestionData {
 
     }
 
-    private static void saveJSON(String path, TriviaQuestion[] array) {
+    private static void saveJSON(TriviaQuestion[] array) {
         Gson gson = new Gson();
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(
-                new FileWriter(path))) {
+                new FileWriter(JSON_PATH))) {
 
             String json = gson.toJson(array);
             bufferedWriter.write(json);
@@ -84,7 +74,7 @@ public class TriviaQuestionData {
         }
     }
 
-    private static void saveJSONFromAll(String path) {
+    private static void saveJSONFromAll() {
         TriviaQuestion[] questionsArray = new TriviaQuestion[getTotalQuestions()];
 
         int i = 0;
@@ -95,12 +85,12 @@ public class TriviaQuestionData {
             }
         }
 
-        saveJSON(path, questionsArray);
+        saveJSON(questionsArray);
     }
 
     public static void add(TriviaQuestion triviaQuestion) {
         questions.get(triviaQuestion.getArc()).add(triviaQuestion);
-        saveJSONFromAll(JSON_PATH);
+        saveJSONFromAll();
     }
 
     public static TriviaQuestion getQuestion(int toArc) {
