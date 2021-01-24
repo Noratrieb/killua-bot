@@ -1,6 +1,7 @@
 package com.github.nilstrieb.core;
 
 import com.github.nilstrieb.cofig.Secrets;
+//import com.github.nilstrieb.commands.fun.DepartureCommand;
 import com.github.nilstrieb.commands.fun.DepartureCommand;
 import com.github.nilstrieb.commands.fun.QuoteCommand;
 import com.github.nilstrieb.commands.fun.SayCommand;
@@ -13,7 +14,6 @@ import com.github.nilstrieb.listener.ChannelMessageListener;
 import com.github.nilstrieb.listener.CommandListener;
 import com.github.nilstrieb.listener.ReactionEventListener;
 import com.github.nilstrieb.listener.StartUpListener;
-import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -22,7 +22,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.utils.Compression;
 
 import javax.security.auth.login.LoginException;
-import java.io.File;
 import java.util.Scanner;
 
 public class Main {

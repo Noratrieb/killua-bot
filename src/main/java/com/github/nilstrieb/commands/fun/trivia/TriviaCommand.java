@@ -12,19 +12,19 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 public class TriviaCommand extends Command {
 
     public TriviaCommand() {
-        super("trivia", "Answer random Trivia questions!", "trivia 0", "(maximal arc (inclusive) as a number) or (add)", """
-                Answer random trivia questions by the community!
-                You can choose the last arc the questions will be from to avoid spoilers
-                Arcs:
-                0 Hunter Exam arc
-                1 Zoldyck Family arc
-                2 Heavens Arena arc
-                3 Yorknew City arc
-                4 Greed Island arc
-                5 Chimera Ant arc
-                6 Election arc
-                                
-                Add questions using `""" + Config.PREFIX + "trivia add`");
+        super("trivia", "Answer random Trivia questions!", "trivia 0", "(maximal arc (inclusive) as a number) or (add)",
+                "Answer random trivia questions by the community!\n" +
+                "You can choose the last arc the questions will be from to avoid spoilers\n" +
+                "Arcs:\n" +
+                "0 Hunter Exam arc\n" +
+                "1 Zoldyck Family arc\n" +
+                "2 Heavens Arena arc\n" +
+                "3 Yorknew City arc\n" +
+                "4 Greed Island arc\n" +
+                "5 Chimera Ant arc\n" +
+                "6 Election arc\n" +
+                "\n" +
+                "Add questions using `" + Config.PREFIX + "trivia add`");
     }
 
     @Override
@@ -110,16 +110,15 @@ public class TriviaCommand extends Command {
         private int status = 0;
         private static final String[] messages = {"Enter all answers seperated by a ; (Example: \"Ging;Mito;Gon\")",
                 "Enter the correct answer index starting at 0 (Example: \"0\")",
-                """
-                Enter the arc this question belongs to as a number (Example: "0")
-                EXAM = 0
-                ZOLDYCK_FAMILY = 1
-                HEAVENS_ARENA = 2
-                YORKNEW_CITY = 3
-                GREED_ISLAND = 4
-                CHIMERA_ANT = 5
-                ELECTION = 6
-                """};
+                "Enter the arc this question belongs to as a number (Example: \"0\")\n" +
+                "EXAM = 0\n" +
+                "ZOLDYCK_FAMILY = 1\n" +
+                "HEAVENS_ARENA = 2\n" +
+                "YORKNEW_CITY = 3\n" +
+                "GREED_ISLAND = 4\n" +
+                "CHIMERA_ANT = 5\n" +
+                "ELECTION = 6\n"
+                };
         private final String[] answers = new String[4];
 
         private AddSection(long textChannelID, long userID) {

@@ -10,7 +10,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 
 public class Config {
-    public static final String D_PREFIX = "kil ";
+    public static final String NORMAL_PREFIX = "kil ";
     public static final String L_PREFIX = "k ";
 
     public static final String PREFIX = L_PREFIX;
@@ -34,7 +34,7 @@ public class Config {
         }
     }
     private static final String JSON_PATH_INTELLIJ = "trivia_questions.json";
-    public static final String JSON_PATH = JSON_PATH_INTELLIJ;
+    public static final String JSON_PATH = JSON_PATH_JAR;
 
     public static EmbedBuilder getDefaultEmbed(Event event) {
         User killua = event.getJDA().getUserById(THIS_ID);
