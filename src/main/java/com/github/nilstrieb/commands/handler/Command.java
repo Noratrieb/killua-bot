@@ -63,13 +63,6 @@ public abstract class Command extends MessageSender{
         CommandHandler.addCommand(name, this, hidden);
     }
 
-    /**
-     * The method called by the CommandHandler
-     * @param event The event
-     * @param args The arguments (after the command and an optional whitespace)
-     */
-    public abstract void called(MessageReceivedEvent event, String args);
-
     public String getName() {
         return name;
     }

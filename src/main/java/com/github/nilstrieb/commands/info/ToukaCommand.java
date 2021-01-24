@@ -3,7 +3,6 @@ package com.github.nilstrieb.commands.info;
 import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 
 public class ToukaCommand extends Command {
@@ -16,7 +15,7 @@ public class ToukaCommand extends Command {
     }
 
     @Override
-    public void called(MessageReceivedEvent event, String args) {
+    public void called(String args) {
         event.getJDA().retrieveUserById(Config.YUKI_ID).queue(yuki -> {
             event.getJDA().retrieveUserById(783720725848129566L).queue(touka -> {
                 EmbedBuilder builder = Config.getDefaultEmbed(event)
@@ -24,7 +23,7 @@ public class ToukaCommand extends Command {
                         .setFooter("The Touka bot was made by " + yuki.getAsTag(), yuki.getAvatarUrl())
                         .setThumbnail(touka.getAvatarUrl())
                         .addField("Invite link", "[Invite]" + TOUKA_INVITE, false);
-                event.getTextChannel().sendMessage(builder.build()).queue();
+                reply(builder.build());
             });
         });
 

@@ -1,5 +1,6 @@
 package com.github.nilstrieb.core;
 
+import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.cofig.Secrets;
 //import com.github.nilstrieb.commands.fun.DepartureCommand;
 import com.github.nilstrieb.commands.fun.DepartureCommand;
@@ -10,10 +11,12 @@ import com.github.nilstrieb.commands.info.InviteCommand;
 import com.github.nilstrieb.commands.info.EvalCommand;
 import com.github.nilstrieb.commands.info.HelpCommand;
 import com.github.nilstrieb.commands.info.ToukaCommand;
+import com.github.nilstrieb.commands.util.EmoteAddCommand;
 import com.github.nilstrieb.listener.ChannelMessageListener;
 import com.github.nilstrieb.listener.CommandListener;
 import com.github.nilstrieb.listener.ReactionEventListener;
 import com.github.nilstrieb.listener.StartUpListener;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -35,6 +38,7 @@ public class Main {
 
         JDA jda = builder.build();
         setupCommands();
+        Config.setJda(jda);
 
         Thread t = new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
@@ -73,5 +77,6 @@ public class Main {
         new QuoteCommand();
         new DepartureCommand();
         new TriviaCommand();
+        new EmoteAddCommand();
     }
 }

@@ -18,9 +18,9 @@ public class EvalCommand extends Command {
     }
 
     @Override
-    public void called(MessageReceivedEvent event, String args) {
+    public void called(String args) {
         if (args.startsWith("event.getJDA().getToken()")) {
-            reply(event, "ODAxDKE1MLU0UDOzNzk4ODI1.YAaYOg.u.MEQ_2bzQkVVZ5y1J5Q23Se5CU");
+            reply("ODAxDKE1MLU0UDOzNzk4ODI1.YAaYOg.u.MEQ_2bzQkVVZ5y1J5Q23Se5CU");
 
         } else if (event.getAuthor().getIdLong() == Config.NILS_ID || event.getAuthor().getIdLong() == Config.YUKI_ID) {
             if (args.startsWith("help")) {
@@ -31,9 +31,9 @@ public class EvalCommand extends Command {
                         .addField("triviaset", "Set JSON. Make sure to backup the JSON beforehand with `triviadump`", false)
                         .addField("reloadtrivia", "Reload the new trivia File", false)
                         .addField("jar", "Upload a new jar file", false);
-                reply(event, builder.build());
+                reply(builder.build());
             } else if (args.startsWith("shutdown")) {
-                reply(event, "Shutting down KilluaBot...");
+                reply("Shutting down KilluaBot...");
                 System.exit(0);
             } else if (args.startsWith("triviadump")) {
                 File f = TriviaQuestionData.getFile();
@@ -43,11 +43,11 @@ public class EvalCommand extends Command {
                 if (attachments.size() > 0) {
                     attachments.get(0).downloadToFile(TriviaQuestionData.getFile());
                 } else {
-                    reply(event, "JSON File not found");
+                    reply("JSON File not found");
                 }
             } else if (args.startsWith("reloadtrivia")) {
                 TriviaQuestionData.reload();
-                reply(event, "Reloaded Trivia Questions");
+                reply("Reloaded Trivia Questions");
             } else if (args.startsWith("jar")) {
                 List<Message.Attachment> attachments = event.getMessage().getAttachments();
                 if (attachments.size() > 0) {
@@ -55,16 +55,16 @@ public class EvalCommand extends Command {
                         attachments.get(0).downloadToFile(
                                 new File(EvalCommand.class.getProtectionDomain().getCodeSource()
                                         .getLocation().toURI()));
-                        reply(event, "Downloaded jar file");
+                        reply("Downloaded jar file");
                     } catch (URISyntaxException e) {
-                        reply(event, "Error: " + e.getMessage());
+                        reply("Error: " + e.getMessage());
                     }
                 } else {
-                    reply(event, "JSON File not found");
+                    reply("JSON File not found");
                 }
             }
         } else {
-            reply(event, "no eval for you");
+            reply("no eval for you");
         }
     }
 }

@@ -15,14 +15,14 @@ public class InviteCommand extends Command {
     }
 
     @Override
-    public void called(MessageReceivedEvent event, String args) {
+    public void called(String args) {
 
         event.getJDA().retrieveUserById(Config.NILS_ID).queue(nils -> {
             EmbedBuilder builder = Config.getDefaultEmbed(event)
                     .setTitle("Invite Killua to your server!")
                     .addField("Invite link", "[Invite]" + INVITE_LINK, true)
                     .setFooter("This bot was made by " + nils.getAsTag(), nils.getAvatarUrl());
-            reply(event, builder.build());
+            reply(builder.build());
         });
 
 

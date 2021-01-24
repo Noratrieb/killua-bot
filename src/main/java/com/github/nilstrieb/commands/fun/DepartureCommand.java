@@ -12,7 +12,7 @@ public class DepartureCommand extends Command {
     }
 
     @Override
-    public void called(MessageReceivedEvent event, String args) {
+    public void called(String args) {
 
         final EmbedBuilder latinBuilder = Config.getDefaultEmbed(event);
         latinBuilder.setTitle("DEPARTURE - GALNERYUS")
@@ -35,6 +35,6 @@ public class DepartureCommand extends Command {
             japaneseBuilder.addField("", DepartureSong.LYRICS_JAPANESE[i], false);
         }
 
-        reply(event, "\uD83C\uDD70", "\uD83C\uDE35", latinBuilder.build(), japaneseBuilder.build());
+        reply("\uD83C\uDD70", "\uD83C\uDE35", latinBuilder.build(), japaneseBuilder.build());
     }
 }

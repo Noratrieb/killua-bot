@@ -1,6 +1,7 @@
 package com.github.nilstrieb.sections;
 
 import com.github.nilstrieb.commands.handler.MessageSender;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public abstract class Section extends MessageSender implements ChannelListener{
     private final long textChannelID;
@@ -11,6 +12,12 @@ public abstract class Section extends MessageSender implements ChannelListener{
         this.userID = userID;
 
         ChannelMessageEventManager.addListener(this, textChannelID);
+    }
+
+    @Override
+    public void messageReceived(MessageReceivedEvent event) {
+        this.event = event;
+        called(event.getMessage().getContentRaw());
     }
 
     public Section(long textChannelID) {

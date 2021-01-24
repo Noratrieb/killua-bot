@@ -2,6 +2,7 @@ package com.github.nilstrieb.cofig;
 
 import com.github.nilstrieb.util.trivia.TriviaQuestionData;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.Event;
 
@@ -36,13 +37,19 @@ public class Config {
     private static final String JSON_PATH_INTELLIJ = "trivia_questions.json";
     public static final String JSON_PATH = JSON_PATH_JAR;
 
+    private static JDA jda;
+
+    public static void setJda(JDA jda) {
+        Config.jda = jda;
+    }
+
     public static EmbedBuilder getDefaultEmbed(Event event) {
-        User killua = event.getJDA().getUserById(THIS_ID);
+        User killua = jda.getUserById(THIS_ID);
         if (killua == null) {
             event.getJDA().retrieveUserById(THIS_ID).queue(user -> {
-                System.out.println("[Config 22] " + user.getAsTag() + " successfully retrieved.");
+                System.out.println("[Config 43] " + user.getAsTag() + " successfully retrieved.");
             });
-            System.err.println("[Config] This bot user not cached. Retrieving user...");
+            System.err.println("[Config 45] This bot user not cached. Retrieving user...");
 
             EmbedBuilder builder = new EmbedBuilder();
             builder.setColor(Config.DEFAULT_COLOR)

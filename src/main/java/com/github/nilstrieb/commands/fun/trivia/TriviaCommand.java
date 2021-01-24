@@ -28,13 +28,13 @@ public class TriviaCommand extends Command {
     }
 
     @Override
-    public void called(MessageReceivedEvent event, String args) {
+    public void called(String args) {
 
         if (args.equals("dump") && event.getAuthor().getIdLong() == Config.NILS_ID) {
             TriviaQuestionData.dump();
-            reply(event, "dumped");
+            reply("dumped");
         } else if (args.startsWith("add")) {
-            reply(event, "Enter the Question (Example: \"What is the name of Gons's father?\")");
+            reply("Enter the Question (Example: \"What is the name of Gons's father?\")");
             new AddSection(event.getTextChannel().getIdLong(), event.getAuthor().getIdLong());
         } else {
             int arc = 0;
@@ -51,7 +51,7 @@ public class TriviaCommand extends Command {
             EmbedBuilder builder = Config.getDefaultEmbed(event)
                     .addField(question.getQuestion(), answers.toString(), false);
 
-            reply(event, builder.build());
+            reply(builder.build());
             new TriviaSection(event.getTextChannel().getIdLong(), event.getAuthor().getIdLong(), question);
         }
     }
@@ -69,8 +69,8 @@ public class TriviaCommand extends Command {
         }
 
         @Override
-        public void messageReceived(MessageReceivedEvent event) {
-            String msg = event.getMessage().getContentRaw().toLowerCase();
+        public void called(String text) {
+            String msg = text.toLowerCase();
             String answer;
 
             String correctAnswer = question.getAnswers()[question.getCorrectAnswer()];
@@ -95,7 +95,7 @@ public class TriviaCommand extends Command {
             if (question.getArc() == TriviaQuestion.EXAM) {
                 builder.setFooter("Tip: Use " + Config.PREFIX + "help trivia for more questions.");
             }
-            reply(event, builder.build());
+            reply(builder.build());
             dispose();
         }
     }
@@ -126,8 +126,8 @@ public class TriviaCommand extends Command {
         }
 
         @Override
-        public void messageReceived(MessageReceivedEvent event) {
-            if (event.getAuthor().getIdLong() == Config.NILS_ID && event.getMessage().getContentRaw().startsWith("debug")) {
+        public void called(String text) {
+            if (event.getAuthor().getIdLong() == Config.NILS_ID && text.startsWith("debug")) {
                 answers[0] = "question";
                 answers[1] = "a;b;c;d";
                 answers[2] = "0";
@@ -136,21 +136,21 @@ public class TriviaCommand extends Command {
             } else {
 
                 System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 139] Received Next Message: "
-                        + event.getMessage().getContentRaw() + " status: " + status + ConsoleColors.RESET);
+                        + text + " status: " + status + ConsoleColors.RESET);
                 answers[status] = event.getMessage().getContentRaw();
                 if (status >= 3) {
                     try {
                         new TriviaApproval(event, new TriviaQuestion(answers));
-                        reply(event, "Question successfully added for approval");
+                        reply("Question successfully added for approval");
                     } catch (NumberFormatException e) {
-                        reply(event, "Error: " + e.getMessage());
+                        reply("Error: " + e.getMessage());
                     }
                     dispose();
                 } else {
-                    reply(event, messages[status]);
+                    reply(messages[status]);
                 }
                 status++;
-                deleteMsg(event);
+                deleteMsg();
             }
         }
     }

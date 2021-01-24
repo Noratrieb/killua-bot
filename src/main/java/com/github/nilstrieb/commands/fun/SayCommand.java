@@ -8,8 +8,8 @@ public class SayCommand extends Command {
         super("say", "Let Killua say something", "say hello gon", "<message>");
     }
     @Override
-    public void called(MessageReceivedEvent event, String args) {
-        reply(event, args);
-        deleteMsg(event);
+    public void called(String args) {
+        reply(args);
+        deleteMsg();
     }
 }

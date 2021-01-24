@@ -16,14 +16,14 @@ public class QuoteCommand extends Command {
     }
 
     @Override
-    public void called(MessageReceivedEvent event, String args) {
+    public void called(String args) {
         if (args.startsWith("all")) {
-            reply(event, getQuotesEmbed(event));
+            reply(getQuotesEmbed(event));
         } else {
             EmbedBuilder builder = Config.getDefaultEmbed(event)
                     .addField("Killuas Quotes", KilluaQuotes.getRandomQuote(), false);
 
-            reply(event, builder.build());
+            reply(builder.build());
         }
     }
 

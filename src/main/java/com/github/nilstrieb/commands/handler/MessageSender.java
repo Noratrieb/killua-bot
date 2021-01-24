@@ -9,31 +9,46 @@ import java.util.TimerTask;
 
 public abstract class MessageSender {
 
-    protected void reply(MessageReceivedEvent event, String message) {
+    protected MessageReceivedEvent event;
+
+    public void onMessageReceived(MessageReceivedEvent event, String args){
+        this.event = event;
+        called(args);
+    }
+
+
+    /**
+     * The method called by the CommandHandler
+     * @param args The arguments (after the command and an optional whitespace)
+     */
+    public abstract void called(String args);
+
+
+    protected void reply(String message) {
         if (!message.equals("")) {
             event.getTextChannel().sendMessage(message).queue();
         }
     }
 
-    protected void reply(MessageReceivedEvent event, MessageEmbed embed) {
+    protected void reply(MessageEmbed embed) {
         if (!embed.isEmpty()) {
             event.getTextChannel().sendMessage(embed).queue();
         }
     }
 
-    protected void reply(MessageReceivedEvent event, MessageEmbed... embeds) {
+    protected void reply(MessageEmbed... embeds) {
         if (!embeds[0].isEmpty()) {
             new MultiPageEmbed(event, embeds);
         }
     }
 
-    protected void reply(MessageReceivedEvent event, String emote1, String emote2, MessageEmbed... embeds) {
+    protected void reply(String emote1, String emote2, MessageEmbed... embeds) {
         if (!embeds[0].isEmpty()) {
             new MultiPageEmbed(event, emote1, emote2, embeds);
         }
     }
 
-    protected void deleteMsg(MessageReceivedEvent event, long delay) {
+    protected void deleteMsg(long delay) {
         new Timer().schedule(
                 new TimerTask() {
                     @Override
@@ -44,7 +59,7 @@ public abstract class MessageSender {
         );
     }
 
-    protected void deleteMsg(MessageReceivedEvent event) {
+    protected void deleteMsg() {
         event.getMessage().delete().queue();
     }
 }
