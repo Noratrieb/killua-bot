@@ -7,7 +7,6 @@ import com.github.nilstrieb.util.ConsoleColors;
 import com.github.nilstrieb.util.trivia.TriviaQuestion;
 import com.github.nilstrieb.util.trivia.TriviaQuestionData;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class TriviaCommand extends Command {
 
@@ -48,7 +47,7 @@ public class TriviaCommand extends Command {
             for (int i = 0; i < question.getAnswers().length; i++) {
                 answers.append(i).append(". ").append(question.getAnswers()[i]).append("\n");
             }
-            EmbedBuilder builder = Config.getDefaultEmbed(event)
+            EmbedBuilder builder = Config.getDefaultEmbed()
                     .addField(question.getQuestion(), answers.toString(), false);
 
             reply(builder.build());
@@ -88,7 +87,7 @@ public class TriviaCommand extends Command {
                 }
             }
 
-            EmbedBuilder builder = Config.getDefaultEmbed(event)
+            EmbedBuilder builder = Config.getDefaultEmbed()
                     .setTitle(answer)
                     .setThumbnail(null)
                     .addField("Correct answer", correctAnswer, false);

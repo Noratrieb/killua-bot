@@ -20,7 +20,7 @@ public class TriviaApproval extends ReactionAdapter {
     public TriviaApproval(MessageReceivedEvent event, TriviaQuestion question) {
         this.question = question;
 
-        EmbedBuilder builder = Config.getDefaultEmbed(event)
+        EmbedBuilder builder = Config.getDefaultEmbed()
                 .setTitle("TRIVIA QUESTION APPROVAL")
                 .addField("Question:", question.getQuestion(), false);
         for (int i = 0; i < question.getAnswers().length; i++) {

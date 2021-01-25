@@ -1,6 +1,7 @@
 package com.github.nilstrieb.commands.util;
 
 import com.github.nilstrieb.commands.handler.Command;
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Icon;
 import net.dv8tion.jda.api.entities.Member;
@@ -27,29 +28,29 @@ public class EmoteAddCommand extends Command {
     @Override
     public void called(String args) {
         List<Message.Attachment> attachments = event.getMessage().getAttachments();
-        event.getGuild().retrieveMember(event.getAuthor()).queue(member -> {
-            if(!member.getPermissions().contains(Permission.MANAGE_EMOTES)) {
-                reply("You don't have the permissions to do that.");
-            } else if (attachments.size() == 0 || !attachments.get(0).isImage()) {
-                reply("No image attached");
-            } else if (args.length() < 3) {
-                reply("Name must be at least 3 characters: " + args);
-            } else {
-                try {
-                    Message.Attachment image = attachments.get(0);
-                    byte[] bytes = readImage(image);
+        Member author = event.getGuild().retrieveMember(event.getAuthor()).complete();
 
-                    if (bytes.length > MAX_EMOTE_SIZE) {
-                        bytes = resizeImage(bytes, image.getFileExtension(), DEFAULT_SIZE);
-                    }
+        if(!author.getPermissions().contains(Permission.MANAGE_EMOTES)) {
+            reply("You don't have the permissions to do that.");
+        } else if (attachments.size() == 0 || !attachments.get(0).isImage()) {
+            reply("No image attached");
+        } else if (args.length() < 3) {
+            reply("Name must be at least 3 characters: " + args);
+        } else {
+            try {
+                Message.Attachment image = attachments.get(0);
+                byte[] bytes = readImage(image);
 
-                    Icon icon = Icon.from(bytes);
-                    event.getGuild().createEmote(args, icon).queue(emote -> reply("Successfully added emote: " + emote.getAsMention()));
-                } catch (IOException e) {
-                    reply("Error while reading image. Please try again.");
+                if (bytes.length > MAX_EMOTE_SIZE) {
+                    bytes = resizeImage(bytes, image.getFileExtension(), DEFAULT_SIZE);
                 }
+
+                Icon icon = Icon.from(bytes);
+                event.getGuild().createEmote(args, icon).queue(emote -> reply("Successfully added emote: " + emote.getAsMention()));
+            } catch (IOException e) {
+                reply("Error while reading image. Please try again.");
             }
-        });
+        }
     }
 
     private byte[] readImage(Message.Attachment image) throws IOException {

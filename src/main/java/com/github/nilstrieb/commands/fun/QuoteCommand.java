@@ -20,7 +20,7 @@ public class QuoteCommand extends Command {
         if (args.startsWith("all")) {
             reply(getQuotesEmbed(event));
         } else {
-            EmbedBuilder builder = Config.getDefaultEmbed(event)
+            EmbedBuilder builder = Config.getDefaultEmbed()
                     .addField("Killuas Quotes", KilluaQuotes.getRandomQuote(), false);
 
             reply(builder.build());
@@ -33,7 +33,7 @@ public class QuoteCommand extends Command {
             String[] quotes = KilluaQuotes.getAllQuotes();
             quotesEmbed = new MessageEmbed[quotes.length];
             for (int i = 0; i < quotes.length; i++) {
-                quotesEmbed[i] = Config.getDefaultEmbed(event)
+                quotesEmbed[i] = Config.getDefaultEmbed()
                         .addField("Killuas Quotes", quotes[i], false)
                         .setFooter("Killua Quotes - " + (i + 1) + "/" + quotes.length).build();
             }

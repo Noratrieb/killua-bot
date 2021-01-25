@@ -3,6 +3,7 @@ package com.github.nilstrieb.commands.info;
 import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
 
 
 public class ToukaCommand extends Command {
@@ -16,16 +17,15 @@ public class ToukaCommand extends Command {
 
     @Override
     public void called(String args) {
-        event.getJDA().retrieveUserById(Config.YUKI_ID).queue(yuki -> {
-            event.getJDA().retrieveUserById(783720725848129566L).queue(touka -> {
-                EmbedBuilder builder = Config.getDefaultEmbed(event)
-                        .setTitle("Invite the Touka bot")
-                        .setFooter("The Touka bot was made by " + yuki.getAsTag(), yuki.getAvatarUrl())
-                        .setThumbnail(touka.getAvatarUrl())
-                        .addField("Invite link", "[Invite]" + TOUKA_INVITE, false);
-                reply(builder.build());
-            });
-        });
+        User yuki = event.getJDA().retrieveUserById(Config.YUKI_ID).complete();
+        User touka = event.getJDA().retrieveUserById(783720725848129566L).complete();
+
+        EmbedBuilder builder = Config.getDefaultEmbed()
+                .setTitle("Invite the Touka bot")
+                .setFooter("The Touka bot was made by " + yuki.getAsTag(), yuki.getAvatarUrl())
+                .setThumbnail(touka.getAvatarUrl())
+                .addField("Invite link", "[Invite]" + TOUKA_INVITE, false);
+        reply(builder.build());
 
 
     }

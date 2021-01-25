@@ -46,7 +46,7 @@ public class CommandHandler {
     }
 
     public static EmbedBuilder getHelpList(Event event) {
-        EmbedBuilder builder = Config.getDefaultEmbed(event);
+        EmbedBuilder builder = Config.getDefaultEmbed();
         builder.setTitle("Killua help");
         for (Command s : commands.values()) {
             builder.addField(s.getName(), s.getDescription(), false);
@@ -65,7 +65,7 @@ public class CommandHandler {
         EmbedBuilder builder = null;
         for (Command value : commands.values()) {
             if (i % MAX_PAGE_LENGTH == 0) {
-                builder = Config.getDefaultEmbed(event);
+                builder = Config.getDefaultEmbed();
                 builder.setTitle("Killua help");
                 builders[j] = builder;
                 j++;
@@ -85,7 +85,7 @@ public class CommandHandler {
     public static MessageEmbed getCommandHelp(Event event, String command) {
         Command cmd = commands.get(command);
         if (cmd != null) {
-            EmbedBuilder builder = Config.getDefaultEmbed(event)
+            EmbedBuilder builder = Config.getDefaultEmbed()
                     .setTitle("Killua help: " + cmd.getName())
                     .addField("Name", cmd.getName(), true)
                     .addField("Description", cmd.getDescription(), true)

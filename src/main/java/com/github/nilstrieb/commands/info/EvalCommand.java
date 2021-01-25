@@ -4,9 +4,7 @@ import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
 import com.github.nilstrieb.util.trivia.TriviaQuestionData;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -24,7 +22,7 @@ public class EvalCommand extends Command {
 
         } else if (event.getAuthor().getIdLong() == Config.NILS_ID || event.getAuthor().getIdLong() == Config.YUKI_ID) {
             if (args.startsWith("help")) {
-                EmbedBuilder builder = Config.getDefaultEmbed(event)
+                EmbedBuilder builder = Config.getDefaultEmbed()
                         .setTitle("Bot Admin only")
                         .addField("shutdown", "shutdown the bot", false)
                         .addField("triviadump", "Get JSON", false)

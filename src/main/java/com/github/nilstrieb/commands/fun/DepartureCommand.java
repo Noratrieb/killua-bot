@@ -4,7 +4,6 @@ import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.commands.handler.Command;
 import com.github.nilstrieb.util.DepartureSong;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class DepartureCommand extends Command {
     public DepartureCommand() {
@@ -14,13 +13,13 @@ public class DepartureCommand extends Command {
     @Override
     public void called(String args) {
 
-        final EmbedBuilder latinBuilder = Config.getDefaultEmbed(event);
+        final EmbedBuilder latinBuilder = Config.getDefaultEmbed();
         latinBuilder.setTitle("DEPARTURE - GALNERYUS")
                 .addField("Youtube Link: ", "[Here](" + DepartureSong.DEPARTURE_YOUTUBE_LINK + ")", false)
                 .addField("Spotify Link: ", "[Here](" + DepartureSong.DEPARTURE_SPOTIFY_LINK + ")", false)
                 .addField("LYRICS (Romanized)", "", false);
 
-        final EmbedBuilder japaneseBuilder = Config.getDefaultEmbed(event);
+        final EmbedBuilder japaneseBuilder = Config.getDefaultEmbed();
         japaneseBuilder.setTitle("DEPARTURE - GALNERYUS")
                 .addField("Youtube Link: ", "[Here](" + DepartureSong.DEPARTURE_YOUTUBE_LINK + ")", false)
                 .addField("Spotify Link: ", "[Here](" + DepartureSong.DEPARTURE_SPOTIFY_LINK + ")", false)
