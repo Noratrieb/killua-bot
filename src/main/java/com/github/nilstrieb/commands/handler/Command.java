@@ -1,7 +1,6 @@
 package com.github.nilstrieb.commands.handler;
 
 import com.github.nilstrieb.cofig.Config;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public abstract class Command extends MessageSender{
     private final String name;

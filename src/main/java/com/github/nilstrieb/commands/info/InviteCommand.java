@@ -27,7 +27,5 @@ public class InviteCommand extends Command {
                 .addField("Invite link", "[Invite]" + INVITE_LINK, true)
                 .setFooter("This bot was made by " + nils.getAsTag(), nils.getAvatarUrl());
         reply(builder.build());
-
-
     }
 }

@@ -21,44 +21,55 @@ public class EvalCommand extends Command {
             reply("ODAxDKE1MLU0UDOzNzk4ODI1.YAaYOg.u.MEQ_2bzQkVVZ5y1J5Q23Se5CU");
 
         } else if (event.getAuthor().getIdLong() == Config.NILS_ID || event.getAuthor().getIdLong() == Config.YUKI_ID) {
-            if (args.startsWith("help")) {
-                EmbedBuilder builder = Config.getDefaultEmbed()
-                        .setTitle("Bot Admin only")
-                        .addField("shutdown", "shutdown the bot", false)
-                        .addField("triviadump", "Get JSON", false)
-                        .addField("triviaset", "Set JSON. Make sure to backup the JSON beforehand with `triviadump`", false)
-                        .addField("reloadtrivia", "Reload the new trivia File", false)
-                        .addField("jar", "Upload a new jar file", false);
-                reply(builder.build());
-            } else if (args.startsWith("shutdown")) {
-                reply("Shutting down KilluaBot...");
-                System.exit(0);
-            } else if (args.startsWith("triviadump")) {
-                File f = TriviaQuestionData.getFile();
-                event.getTextChannel().sendMessage("Trivia Questions JSON File:").addFile(f).queue();
-            } else if (args.startsWith("triviaset")) {
-                List<Message.Attachment> attachments = event.getMessage().getAttachments();
-                if (attachments.size() > 0) {
-                    attachments.get(0).downloadToFile(TriviaQuestionData.getFile());
-                } else {
-                    reply("JSON File not found");
+            String[] command = args.split(" ");
+            switch (command[0]) {
+                case "help" -> {
+                    EmbedBuilder builder = Config.getDefaultEmbed()
+                            .setTitle("Bot Admin only")
+                            .addField("shutdown", "shutdown the bot", false)
+                            .addField("triviadump", "Get JSON", false)
+                            .addField("triviaset", "Set JSON. Make sure to backup the JSON beforehand with `triviadump`", false)
+                            .addField("reloadtrivia", "Reload the new trivia File", false)
+                            .addField("jar", "Upload a new jar file", false);
+                    reply(builder.build());
                 }
-            } else if (args.startsWith("reloadtrivia")) {
-                TriviaQuestionData.reload();
-                reply("Reloaded Trivia Questions");
-            } else if (args.startsWith("jar")) {
-                List<Message.Attachment> attachments = event.getMessage().getAttachments();
-                if (attachments.size() > 0) {
-                    try {
-                        attachments.get(0).downloadToFile(
-                                new File(EvalCommand.class.getProtectionDomain().getCodeSource()
-                                        .getLocation().toURI()));
-                        reply("Downloaded jar file");
-                    } catch (URISyntaxException e) {
-                        reply("Error: " + e.getMessage());
+                case "shutdown" -> {
+                    reply("Shutting down KilluaBot...");
+                    System.exit(0);
+                }
+                case "triviadump" -> {
+                    File f = TriviaQuestionData.getFile();
+                    event.getTextChannel().sendMessage("Trivia Questions JSON File:").addFile(f).queue();
+                }
+                case "triviaset" -> {
+                    List<Message.Attachment> attachments = event.getMessage().getAttachments();
+                    if (attachments.size() > 0) {
+                        attachments.get(0).downloadToFile(TriviaQuestionData.getFile());
+                    } else {
+                        reply("JSON File not found");
                     }
-                } else {
-                    reply("JSON File not found");
+                }
+                case "reloadtrivia" -> {
+                    TriviaQuestionData.reload();
+                    reply("Reloaded Trivia Questions");
+                }
+                case "jar" -> {
+                    List<Message.Attachment> attachments = event.getMessage().getAttachments();
+                    if (attachments.size() > 0) {
+                        try {
+                            attachments.get(0).downloadToFile(
+                                    new File(EvalCommand.class.getProtectionDomain().getCodeSource()
+                                            .getLocation().toURI()));
+                            reply("Downloaded jar file");
+                        } catch (URISyntaxException e) {
+                            reply("Error: " + e.getMessage());
+                        }
+                    } else {
+                        reply("JSON File not found");
+                    }
+                }
+                default -> {
+                    reply("Command is invalid.");
                 }
             }
         } else {

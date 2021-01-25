@@ -29,7 +29,6 @@ public class Config {
         try {
             JSON_PATH_JAR = new File(TriviaQuestionData.class.getProtectionDomain().getCodeSource()
                     .getLocation().toURI()).getPath().replaceAll("(.*\\\\).*?\\.jar", "$1") + "trivia_questions.json";
-            ;
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
