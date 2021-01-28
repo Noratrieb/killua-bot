@@ -4,6 +4,7 @@ import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.cofig.Secrets;
 //import com.github.nilstrieb.commands.fun.DepartureCommand;
 import com.github.nilstrieb.commands.fun.DepartureCommand;
+import com.github.nilstrieb.commands.fun.FightCommand;
 import com.github.nilstrieb.commands.fun.QuoteCommand;
 import com.github.nilstrieb.commands.fun.SayCommand;
 import com.github.nilstrieb.commands.fun.trivia.TriviaCommand;
@@ -16,7 +17,6 @@ import com.github.nilstrieb.listener.ChannelMessageListener;
 import com.github.nilstrieb.listener.CommandListener;
 import com.github.nilstrieb.listener.ReactionEventListener;
 import com.github.nilstrieb.listener.StartUpListener;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -30,7 +30,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws LoginException {
-        JDABuilder builder = JDABuilder.createDefault(Secrets.TOKEN);
+        JDABuilder builder = JDABuilder.createDefault(Secrets.L_TOKEN);
         builder.setCompression(Compression.ZLIB);
         builder.setActivity(Activity.watching("over Gon"));
 
@@ -78,5 +78,6 @@ public class Main {
         new DepartureCommand();
         new TriviaCommand();
         new EmoteAddCommand();
+        new FightCommand();
     }
 }

@@ -36,6 +36,8 @@ public class EmoteAddCommand extends Command {
             reply("No image attached");
         } else if (args.length() < 3) {
             reply("Name must be at least 3 characters: " + args);
+        } else if (!args.matches("\\w+")) {
+            reply("Emote names are only allowed to contain characters, numbers and underscore");
         } else {
             try {
                 Message.Attachment image = attachments.get(0);
@@ -72,7 +74,8 @@ public class EmoteAddCommand extends Command {
     private byte[] resizeImage(byte[] bytes, String format, int size) throws IOException {
         reply("Image size too big (" + bytes.length / 1000 + "kB). Resizing image...");
         Image image = ImageIO.read(new ByteArrayInputStream(bytes));
-        image = image.getScaledInstance(size, size, Image.SCALE_SMOOTH);
+        int ratio = image.getHeight(null) / image.getWidth(null);
+        image = image.getScaledInstance(size, size * ratio, Image.SCALE_SMOOTH);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         BufferedImage bufferedImg = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -82,7 +85,7 @@ public class EmoteAddCommand extends Command {
 
         ImageIO.write(bufferedImg, format, out);
         bytes = out.toByteArray();
-        if(bytes.length > MAX_EMOTE_SIZE){
+        if (bytes.length > MAX_EMOTE_SIZE) {
             return resizeImage(bytes, format, size - 100);
         } else {
             return bytes;
