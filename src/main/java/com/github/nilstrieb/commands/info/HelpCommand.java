@@ -1,7 +1,7 @@
 package com.github.nilstrieb.commands.info;
 
-import com.github.nilstrieb.commands.handler.Command;
-import com.github.nilstrieb.commands.handler.CommandHandler;
+import com.github.nilstrieb.core.command.Command;
+import com.github.nilstrieb.core.command.CommandHandler;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
 public class HelpCommand extends Command {
@@ -12,14 +12,13 @@ public class HelpCommand extends Command {
     @Override
     public void called(String args) {
         if(args.length() == 0) {
-            if (CommandHandler.commandAmount() > CommandHandler.MAX_PAGE_LENGTH) {
-                reply(CommandHandler.getHelpLists(event));
-
+            if (CommandHandler.commandAmount() > CommandHandler.MAX_HELP_PAGE_LENGTH) {
+                reply(CommandHandler.getHelpLists());
             } else {
-                reply(CommandHandler.getHelpList(event).build());
+                reply(CommandHandler.getHelpList().build());
             }
         } else {
-            MessageEmbed help = CommandHandler.getCommandHelp(event, args.split(" ")[0]);
+            MessageEmbed help = CommandHandler.getCommandHelp(args.split(" ")[0]);
             if (help != null) {
                 reply(help);
             }

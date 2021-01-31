@@ -1,21 +1,21 @@
-package com.github.nilstrieb.commands.handler;
+package com.github.nilstrieb.core.command;
 
 import com.github.nilstrieb.cofig.Config;
 
+/**
+ * A parser for parsing commands
+ */
 public class CommandParser {
-
-    private static final CommandParser parser = new CommandParser();
-
-    private CommandParser() {}
-
-    public static CommandParser getInstance() {
-        return parser;
-    }
 
     public static String[] splitArgs(String args){
         return args.split(" ");
     }
 
+    /**
+     * Split the full message into command name + args
+     * @param contentRaw The full message (including prefix!)
+     * @return a String array where [0] is the command name and [1] are the args (the text after the name + an optional space)
+     */
     public String[] splitOffCommandName(String contentRaw) {
         String[] returns = new String[2];
         String beheaded = contentRaw.substring(Config.PREFIX.length());

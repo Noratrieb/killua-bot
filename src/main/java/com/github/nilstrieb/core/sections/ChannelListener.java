@@ -1,4 +1,4 @@
-package com.github.nilstrieb.sections;
+package com.github.nilstrieb.core.sections;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 

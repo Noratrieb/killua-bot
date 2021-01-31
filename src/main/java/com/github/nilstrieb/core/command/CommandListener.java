@@ -1,6 +1,6 @@
-package com.github.nilstrieb.listener;
+package com.github.nilstrieb.core.command;
 
-import com.github.nilstrieb.commands.handler.CommandHandler;
+import com.github.nilstrieb.core.command.CommandHandler;
 import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

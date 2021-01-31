@@ -1,6 +1,6 @@
-package com.github.nilstrieb.util;
+package com.github.nilstrieb.core.util;
 
-import com.github.nilstrieb.reactions.ReactionAdapter;
+import com.github.nilstrieb.core.reactions.ReactionAdapter;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -8,6 +8,9 @@ import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 
 import java.util.Objects;
 
+/**
+ * This class sends a message to the channel in the event that contains multiple pages that can be navigated using reactinos
+ */
 public class MultiPageEmbed extends ReactionAdapter {
     private static final String NEXT_PAGE_DEFAULT_REACTION = "\u25b6\ufe0f";
     private static final String PREVIOUS_PAGE_DEFAULT_REACTION = "\u25c0\ufe0f";
@@ -19,10 +22,22 @@ public class MultiPageEmbed extends ReactionAdapter {
     private final String nextReaction;
 
 
+    /**
+     * Create a new MultiPageEmbed with the default emotes
+     *
+     * @param event The event
+     * @param pages The pages
+     */
     public MultiPageEmbed(MessageReceivedEvent event, MessageEmbed... pages) {
         this(event, PREVIOUS_PAGE_DEFAULT_REACTION, NEXT_PAGE_DEFAULT_REACTION, pages);
     }
 
+    /**
+     * Create a new MultiPageEmbed with custom emotes
+     *
+     * @param event The event
+     * @param pages The pages
+     */
     public MultiPageEmbed(MessageReceivedEvent event, String prevReaction, String nextReaction, MessageEmbed[] pages) {
         this.prevReaction = prevReaction;
         this.nextReaction = nextReaction;
@@ -53,7 +68,10 @@ public class MultiPageEmbed extends ReactionAdapter {
                 }
             }
         }
-        Objects.requireNonNull(event.getUser(), "Reaction user was null");
-        event.getReaction().removeReaction(event.getUser()).queue();
+        if (event.getUser() != null) {
+            event.getReaction().removeReaction(event.getUser()).queue();
+        } else {
+            System.err.println("[MultiPageEmbed] Reaction user was null");
+        }
     }
 }

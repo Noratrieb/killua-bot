@@ -1,8 +1,8 @@
 package com.github.nilstrieb.commands.fun.trivia;
 
 import com.github.nilstrieb.cofig.Config;
-import com.github.nilstrieb.reactions.ReactionAdapter;
-import com.github.nilstrieb.reactions.ReactionEventManager;
+import com.github.nilstrieb.core.reactions.ReactionAdapter;
+import com.github.nilstrieb.core.reactions.ReactionEventManager;
 import com.github.nilstrieb.util.ConsoleColors;
 import com.github.nilstrieb.util.trivia.TriviaQuestion;
 import com.github.nilstrieb.util.trivia.TriviaQuestionData;

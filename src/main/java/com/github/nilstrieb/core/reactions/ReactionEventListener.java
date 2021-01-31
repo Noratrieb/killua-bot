@@ -1,12 +1,9 @@
-package com.github.nilstrieb.listener;
+package com.github.nilstrieb.core.reactions;
 
-import com.github.nilstrieb.reactions.ReactionEventManager;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public class ReactionEventListener extends ListenerAdapter {
     @Override

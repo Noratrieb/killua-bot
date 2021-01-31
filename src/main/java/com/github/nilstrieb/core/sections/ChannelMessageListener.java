@@ -1,6 +1,5 @@
-package com.github.nilstrieb.listener;
+package com.github.nilstrieb.core.sections;
 
-import com.github.nilstrieb.sections.ChannelMessageEventManager;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;

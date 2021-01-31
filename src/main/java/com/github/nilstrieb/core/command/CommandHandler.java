@@ -1,21 +1,32 @@
-package com.github.nilstrieb.commands.handler;
+package com.github.nilstrieb.core.command;
 
 import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.*;
 
+/**
+ * The CommandHandler handles everything about the commands
+ */
 public class CommandHandler {
 
-    public static final int MAX_PAGE_LENGTH = 10;
+    public static final int MAX_HELP_PAGE_LENGTH = 10;
+
     private static final Map<String, Command> commands = new HashMap<>();
     private static final Map<String, Command> hiddenCommands = new HashMap<>();
-    private static final CommandParser parser = CommandParser.getInstance();
 
+    private static final CommandParser parser = new CommandParser();
+
+    /**
+     * Add a new command to the handler. This is normally done by the{@code Command}.
+     *
+     * @param key    The key (command name)
+     * @param cmd    The command object
+     * @param hidden Whether the command should be shown on the help page
+     */
     public static void addCommand(String key, Command cmd, boolean hidden) {
         if (hidden) {
             hiddenCommands.put(key, cmd);
@@ -28,7 +39,12 @@ public class CommandHandler {
         commands.put(key, cmd);
     }
 
-    public static void call(MessageReceivedEvent event) {
+    /**
+     * This method is called by the{@code CommandListener}
+     *
+     * @param event The {@code MessageReceivedEvent}
+     */
+    static void call(MessageReceivedEvent event) {
         if (event.getMessage().getContentRaw().toLowerCase().startsWith(Config.PREFIX)) {
             String[] split = parser.splitOffCommandName(event.getMessage().getContentRaw());
             String command = split[0];
@@ -45,7 +61,12 @@ public class CommandHandler {
         return commands.size();
     }
 
-    public static EmbedBuilder getHelpList(Event event) {
+    /**
+     * Get the list of all commands, on one page.
+     * May lead to problems if there are too many commands.
+     * @return The page
+     */
+    public static EmbedBuilder getHelpList() {
         EmbedBuilder builder = Config.getDefaultEmbed();
         builder.setTitle("Killua help");
         for (Command s : commands.values()) {
@@ -54,17 +75,21 @@ public class CommandHandler {
         return builder;
     }
 
-    public static MessageEmbed[] getHelpLists(Event event) {
+    /**
+     * Get a list of all commands, spread over different pages
+     * @return The pages
+     */
+    public static MessageEmbed[] getHelpLists() {
 
         int length = commands.size();
-        int pages = length / MAX_PAGE_LENGTH + 1;
+        int pages = length / MAX_HELP_PAGE_LENGTH + 1;
         EmbedBuilder[] builders = new EmbedBuilder[pages];
 
 
         int i = 0, j = 0;
         EmbedBuilder builder = null;
         for (Command value : commands.values()) {
-            if (i % MAX_PAGE_LENGTH == 0) {
+            if (i % MAX_HELP_PAGE_LENGTH == 0) {
                 builder = Config.getDefaultEmbed();
                 builder.setTitle("Killua help");
                 builders[j] = builder;
@@ -82,15 +107,19 @@ public class CommandHandler {
         return messageEmbeds;
     }
 
-    public static MessageEmbed getCommandHelp(Event event, String command) {
+    /**
+     * Returns the help page for a single command
+     * @param command The command name
+     * @return The help page
+     */
+    public static MessageEmbed getCommandHelp(String command) {
         Command cmd = commands.get(command);
         if (cmd != null) {
             EmbedBuilder builder = Config.getDefaultEmbed()
                     .setTitle("Killua help: " + cmd.getName())
                     .addField("Name", cmd.getName(), true)
-                    .addField("Description", cmd.getDescription(), true)
-                    .addField("Example usage", "`" + cmd.getExampleUsage() + "`", true)
-                    .addField("Detail:", cmd.getDetailDescription(), true);
+                    .addField("Description:", cmd.getDetailDescription(), true)
+                    .addField("Example usage", "`" + cmd.getExampleUsage() + "`", true);
 
             if (!cmd.getArguments().equals("")) {
                 builder.addField("Arguments", "`" + cmd.getArguments() + "`", true);

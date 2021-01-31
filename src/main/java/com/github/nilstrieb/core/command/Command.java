@@ -1,14 +1,17 @@
-package com.github.nilstrieb.commands.handler;
+package com.github.nilstrieb.core.command;
 
 import com.github.nilstrieb.cofig.Config;
 
+/**
+ * The base command class. Every command should extend this class.
+ */
 public abstract class Command extends MessageSender{
     private final String name;
     private final String description;
     private final String exampleUsage;
     private final String arguments;
     private final String detailDescription;
-    private final CommandParser parser = CommandParser.getInstance();
+    private final CommandParser parser = new CommandParser();
 
 
     /**

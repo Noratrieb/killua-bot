@@ -1,4 +1,4 @@
-package com.github.nilstrieb.reactions;
+package com.github.nilstrieb.core.reactions;
 
 import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;

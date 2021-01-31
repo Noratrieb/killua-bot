@@ -1,4 +1,4 @@
-package com.github.nilstrieb.sections;
+package com.github.nilstrieb.core.sections;
 
 
 import com.github.nilstrieb.util.ConsoleColors;
@@ -26,9 +26,12 @@ public class ChannelMessageEventManager {
 
     public static void onMessageReceived(MessageReceivedEvent event) {
         long id = event.getTextChannel().getIdLong();
+        //if the message is relevant
         if (listeners.containsKey(id)) {
             System.out.println(ConsoleColors.YELLOW + "[ChannelMsgEvtMgr 30] Message in listened channel " +
                     event.getTextChannel().getName() + " by " + event.getAuthor().getAsTag() + ": " + event.getMessage().getContentRaw() + ConsoleColors.RESET);
+
+            //notify all listeners
             List<ChannelListener> list = listeners.get(id);
             for (ChannelListener channelListener : list) {
                 if (channelListener.getUserID() == 0) {
@@ -38,16 +41,21 @@ public class ChannelMessageEventManager {
                 }
             }
 
+            //remove the listeners that got removed during the calling
             for (ChannelListener channelListener : removeBuffer) {
                 listeners.get(channelListener.getChannelID()).remove(channelListener);
                 removedChannels.add(channelListener.getChannelID());
             }
+
+            //remove the channels if all listeners for that channel have been removed
             for (Long removedChannel : removedChannels) {
                 list = listeners.get(removedChannel);
                 if (list.isEmpty()) {
                     listeners.remove(removedChannel);
                 }
             }
+
+            //clear the buffers
             removedChannels.clear();
             removeBuffer.clear();
         }

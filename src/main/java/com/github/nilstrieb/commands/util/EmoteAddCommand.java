@@ -1,7 +1,6 @@
 package com.github.nilstrieb.commands.util;
 
-import com.github.nilstrieb.commands.handler.Command;
-import net.dv8tion.jda.api.JDA;
+import com.github.nilstrieb.core.command.Command;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Icon;
 import net.dv8tion.jda.api.entities.Member;

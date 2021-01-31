@@ -1,7 +1,6 @@
 package com.github.nilstrieb.commands.fun;
 
-import com.github.nilstrieb.commands.handler.Command;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import com.github.nilstrieb.core.command.Command;
 
 public class SayCommand extends Command {
     public SayCommand(){

@@ -1,7 +1,7 @@
 package com.github.nilstrieb.commands.info;
 
 import com.github.nilstrieb.cofig.Config;
-import com.github.nilstrieb.commands.handler.Command;
+import com.github.nilstrieb.core.command.Command;
 import com.github.nilstrieb.util.trivia.TriviaQuestionData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
