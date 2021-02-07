@@ -2,7 +2,6 @@ package com.github.nilstrieb.core;
 
 import com.github.nilstrieb.cofig.Config;
 import com.github.nilstrieb.cofig.Secrets;
-//import com.github.nilstrieb.commands.fun.DepartureCommand;
 import com.github.nilstrieb.commands.fun.DepartureCommand;
 import com.github.nilstrieb.commands.fun.FightCommand;
 import com.github.nilstrieb.commands.fun.QuoteCommand;
@@ -16,6 +15,7 @@ import com.github.nilstrieb.commands.util.EmoteAddCommand;
 import com.github.nilstrieb.core.sections.ChannelMessageListener;
 import com.github.nilstrieb.core.command.CommandListener;
 import com.github.nilstrieb.core.reactions.ReactionEventListener;
+import com.github.nilstrieb.listener.DMDebugListener;
 import com.github.nilstrieb.listener.StartUpListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -34,7 +34,12 @@ public class Main {
         builder.setCompression(Compression.ZLIB);
         builder.setActivity(Activity.watching("over Gon"));
 
-        builder.addEventListeners(new StartUpListener(), new ChannelMessageListener(), new CommandListener(), new ReactionEventListener());
+        builder.addEventListeners(
+                new StartUpListener(),
+                new ChannelMessageListener(),
+                new CommandListener(),
+                new ReactionEventListener(),
+                new DMDebugListener());
 
         JDA jda = builder.build();
         setupCommands();

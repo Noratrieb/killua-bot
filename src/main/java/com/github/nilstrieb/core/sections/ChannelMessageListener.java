@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class ChannelMessageListener extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        if (!event.getAuthor().isBot()) {
+        if (!event.getAuthor().isBot() && event.isFromGuild()) {
             ChannelMessageEventManager.onMessageReceived(event);
         }
     }
