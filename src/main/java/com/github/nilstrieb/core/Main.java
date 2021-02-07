@@ -30,7 +30,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws LoginException {
-        JDABuilder builder = JDABuilder.createDefault(Secrets.L_TOKEN);
+        JDABuilder builder = JDABuilder.createDefault(Secrets.TOKEN);
         builder.setCompression(Compression.ZLIB);
         builder.setActivity(Activity.watching("over Gon"));
 

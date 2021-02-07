@@ -29,7 +29,7 @@ public class ChannelMessageEventManager {
         //if the message is relevant
         if (listeners.containsKey(id)) {
             System.out.println(ConsoleColors.YELLOW + "[ChannelMsgEvtMgr 30] Message in listened channel " +
-                    event.getTextChannel().getName() + " by " + event.getAuthor().getAsTag() + ": " + event.getMessage().getContentRaw() + ConsoleColors.RESET);
+                    event.getTextChannel().getName() + ConsoleColors.RESET);
 
             //notify all listeners
             List<ChannelListener> list = listeners.get(id);

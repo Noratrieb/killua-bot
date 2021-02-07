@@ -134,8 +134,7 @@ public class TriviaCommand extends Command {
                 new TriviaApproval(event, new TriviaQuestion(answers));
             } else {
 
-                System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 139] Received Next Message: "
-                        + text + " status: " + status + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.BLUE_BOLD + "[TriviaCommand.AddSection 139] Received Next Message. status: " + status + ConsoleColors.RESET);
                 answers[status] = event.getMessage().getContentRaw();
                 if (status >= 3) {
                     try {
