@@ -1,11 +1,7 @@
 package com.github.nilstrieb.core;
 
 import com.github.nilstrieb.cofig.Config;
-import com.github.nilstrieb.cofig.Secrets;
-import com.github.nilstrieb.commands.fun.DepartureCommand;
-import com.github.nilstrieb.commands.fun.FightCommand;
-import com.github.nilstrieb.commands.fun.QuoteCommand;
-import com.github.nilstrieb.commands.fun.SayCommand;
+import com.github.nilstrieb.commands.fun.*;
 import com.github.nilstrieb.commands.fun.trivia.TriviaCommand;
 import com.github.nilstrieb.commands.info.InviteCommand;
 import com.github.nilstrieb.commands.info.EvalCommand;
@@ -84,5 +80,6 @@ public class Main {
         new TriviaCommand();
         new EmoteAddCommand();
         new FightCommand();
+        new HugCommand();
     }
 }
