@@ -59,6 +59,8 @@ public class Main {
                             }
                         }
                     }
+                } else if (line.startsWith("version") || line.startsWith("v")) {
+                    System.out.println(Config.VERSION);
                 }
                 line = scanner.nextLine();
             }

@@ -24,7 +24,6 @@ public class HugCommand extends Command {
                 && mentions.size() >= 1
                 && mentions.get(0).getIdLong() != sender.getIdLong()) {
 
-            sender = mentions.get(0);
             builder.setDescription(sender.getEffectiveName() + " is giving " + mentions.get(0).getEffectiveName() + " a hug! :)");
         } else {
             builder.setDescription("Get a hug, bro <3");
