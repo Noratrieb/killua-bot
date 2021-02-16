@@ -59,8 +59,9 @@ public class EvalCommand extends Command {
                         try {
                             attachments.get(0).downloadToFile(
                                     new File(EvalCommand.class.getProtectionDomain().getCodeSource()
-                                            .getLocation().toURI()));
-                            reply("Downloaded jar file");
+                                            .getLocation().toURI())).thenRun(() -> {
+                                reply("Downloaded jar file");
+                            });
                         } catch (URISyntaxException e) {
                             reply("Error: " + e.getMessage());
                         }
