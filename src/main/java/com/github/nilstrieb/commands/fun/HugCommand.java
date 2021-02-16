@@ -16,13 +16,16 @@ public class HugCommand extends Command {
 
     @Override
     public void called(String args) {
-        Member member = event.getMember();
+        Member sender = event.getMember();
         List<Member> mentions = event.getMessage().getMentionedMembers();
         EmbedBuilder builder = Config.getDefaultEmbed();
 
-        if (mentions.size() == 1 && !mentions.get(0).getId().equalsIgnoreCase(Objects.requireNonNull(member).getId())) {
-            member = mentions.get(0);
-            builder.setDescription(mentions.get(0).getEffectiveName() +" is giving " + member.getEffectiveName() + " a hug! :)");
+        if (sender != null
+                && mentions.size() >= 1
+                && mentions.get(0).getIdLong() != sender.getIdLong()) {
+
+            sender = mentions.get(0);
+            builder.setDescription(sender.getEffectiveName() + " is giving " + mentions.get(0).getEffectiveName() + " a hug! :)");
         } else {
             builder.setDescription("Get a hug, bro <3");
         }

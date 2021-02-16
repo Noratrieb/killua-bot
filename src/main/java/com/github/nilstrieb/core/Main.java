@@ -1,12 +1,10 @@
 package com.github.nilstrieb.core;
 
 import com.github.nilstrieb.cofig.Config;
+import com.github.nilstrieb.cofig.Secrets;
 import com.github.nilstrieb.commands.fun.*;
 import com.github.nilstrieb.commands.fun.trivia.TriviaCommand;
-import com.github.nilstrieb.commands.info.InviteCommand;
-import com.github.nilstrieb.commands.info.EvalCommand;
-import com.github.nilstrieb.commands.info.HelpCommand;
-import com.github.nilstrieb.commands.info.ToukaCommand;
+import com.github.nilstrieb.commands.info.*;
 import com.github.nilstrieb.commands.util.EmoteAddCommand;
 import com.github.nilstrieb.core.sections.ChannelMessageListener;
 import com.github.nilstrieb.core.command.CommandListener;
