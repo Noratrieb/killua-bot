@@ -24,7 +24,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws LoginException {
-        JDABuilder builder = JDABuilder.createDefault(Secrets.TOKEN);
+        Config.init(1);
+        JDABuilder builder = JDABuilder.createDefault(Config.TOKEN);
         builder.setCompression(Compression.ZLIB);
         builder.setActivity(Activity.watching("over Gon"));
 
