@@ -2,6 +2,7 @@ package com.github.nilstrieb.commands.util;
 
 import com.github.nilstrieb.core.command.Command;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Icon;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
@@ -10,6 +11,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -33,6 +35,12 @@ public class EmoteAddCommand extends Command {
             reply("You don't have the permissions to do that.");
         } else if (emoteLimitReached()) {
             reply("Emote limit reached");
+        } else if (messageContainsEmote()) {
+            try {
+                stealEmote();
+            } catch (Exception e) {
+                reply("Error while reading image. Please try again.");
+            }
         } else if (attachments.isEmpty() || !attachments.get(0).isImage()) {
             reply("No image attached");
         } else if (args.length() < 3) {
@@ -43,17 +51,31 @@ public class EmoteAddCommand extends Command {
             try {
                 Message.Attachment image = attachments.get(0);
                 byte[] bytes = readImage(image);
-
                 if (bytes.length > MAX_EMOTE_SIZE) {
                     bytes = resizeImage(bytes, image.getFileExtension(), DEFAULT_SIZE);
                 }
-
-                Icon icon = Icon.from(bytes);
-                event.getGuild().createEmote(args, icon).queue(emote -> reply("Successfully added emote: " + emote.getAsMention()));
+                uploadEmote(bytes, args);
             } catch (IOException e) {
                 reply("Error while reading image. Please try again.");
             }
         }
+    }
+
+    private void stealEmote() throws IOException {
+        Emote emote = event.getMessage().getEmotes().get(0);
+        URL url = new URL(emote.getImageUrl());
+        byte[] data = readUrl(url);
+        uploadEmote(data, event.getMessage().getContentRaw());
+    }
+
+    private void uploadEmote(byte[] bytes, String name) {
+
+        Icon icon = Icon.from(bytes);
+        event.getGuild().createEmote(name, icon).queue(emote -> reply("Successfully added emote: " + emote.getAsMention()));
+    }
+
+    private boolean messageContainsEmote() {
+        return !event.getMessage().getEmotes().isEmpty();
     }
 
     private boolean emoteLimitReached() {
@@ -66,6 +88,10 @@ public class EmoteAddCommand extends Command {
     private byte[] readImage(Message.Attachment image) throws IOException {
         String urlString = image.getUrl();
         URL url = new URL(urlString);
+        return readUrl(url);
+    }
+
+    private byte[] readUrl(URL url) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         byte[] chunk = new byte[4096];
