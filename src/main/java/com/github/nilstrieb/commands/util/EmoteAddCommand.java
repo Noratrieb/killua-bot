@@ -29,9 +29,11 @@ public class EmoteAddCommand extends Command {
         List<Message.Attachment> attachments = event.getMessage().getAttachments();
         Member author = event.getGuild().retrieveMember(event.getAuthor()).complete();
 
-        if(!author.getPermissions().contains(Permission.MANAGE_EMOTES)) {
+        if (!author.getPermissions().contains(Permission.MANAGE_EMOTES)) {
             reply("You don't have the permissions to do that.");
-        } else if (attachments.size() == 0 || !attachments.get(0).isImage()) {
+        } else if (emoteLimitReached()) {
+            reply("Emote limit reached");
+        } else if (attachments.isEmpty() || !attachments.get(0).isImage()) {
             reply("No image attached");
         } else if (args.length() < 3) {
             reply("Name must be at least 3 characters: " + args);
@@ -54,6 +56,13 @@ public class EmoteAddCommand extends Command {
         }
     }
 
+    private boolean emoteLimitReached() {
+        int max = event.getGuild().getMaxEmotes();
+        int count = event.getGuild().retrieveEmotes().complete().size();
+
+        return max == count;
+    }
+
     private byte[] readImage(Message.Attachment image) throws IOException {
         String urlString = image.getUrl();
         URL url = new URL(urlString);
@@ -61,10 +70,11 @@ public class EmoteAddCommand extends Command {
 
         byte[] chunk = new byte[4096];
         int bytesRead;
-        InputStream stream = url.openStream();
 
-        while ((bytesRead = stream.read(chunk)) > 0) {
-            out.write(chunk, 0, bytesRead);
+        try (InputStream stream = url.openStream()) {
+            while ((bytesRead = stream.read(chunk)) > 0) {
+                out.write(chunk, 0, bytesRead);
+            }
         }
 
         return out.toByteArray();
