@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -29,7 +28,13 @@ public class EmoteAddCommand extends Command {
     @Override
     public void called(String args) {
         List<Message.Attachment> attachments = event.getMessage().getAttachments();
-        Member author = event.getGuild().retrieveMember(event.getAuthor()).complete();
+        Member author = event.getMember();
+
+        if (author == null) {
+            System.err.println("Author of emote add Message is null");
+            reply("Error while adding emote. Pleasy try again.");
+            return;
+        }
 
         if (!author.getPermissions().contains(Permission.MANAGE_EMOTES)) {
             reply("You don't have the permissions to do that.");
@@ -65,25 +70,14 @@ public class EmoteAddCommand extends Command {
         Emote emote = event.getMessage().getEmotes().get(0);
         URL url = new URL(emote.getImageUrl());
         byte[] data = readUrl(url);
-        uploadEmote(data, event.getMessage().getContentRaw());
+        uploadEmote(data, emote.getName());
     }
 
     private void uploadEmote(byte[] bytes, String name) {
-
         Icon icon = Icon.from(bytes);
         event.getGuild().createEmote(name, icon).queue(emote -> reply("Successfully added emote: " + emote.getAsMention()));
     }
 
-    private boolean messageContainsEmote() {
-        return !event.getMessage().getEmotes().isEmpty();
-    }
-
-    private boolean emoteLimitReached() {
-        int max = event.getGuild().getMaxEmotes();
-        int count = event.getGuild().retrieveEmotes().complete().size();
-
-        return max == count;
-    }
 
     private byte[] readImage(Message.Attachment image) throws IOException {
         String urlString = image.getUrl();
@@ -104,6 +98,17 @@ public class EmoteAddCommand extends Command {
         }
 
         return out.toByteArray();
+    }
+
+    private boolean messageContainsEmote() {
+        return !event.getMessage().getEmotes().isEmpty();
+    }
+
+    private boolean emoteLimitReached() {
+        int max = event.getGuild().getMaxEmotes();
+        int count = event.getGuild().retrieveEmotes().complete().size();
+
+        return max == count;
     }
 
     private byte[] resizeImage(byte[] bytes, String format, int size) throws IOException {
