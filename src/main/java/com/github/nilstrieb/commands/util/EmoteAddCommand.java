@@ -12,7 +12,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EmoteAddCommand extends Command {
 
@@ -106,7 +108,7 @@ public class EmoteAddCommand extends Command {
 
     private boolean emoteLimitReached() {
         int max = event.getGuild().getMaxEmotes();
-        int count = event.getGuild().retrieveEmotes().complete().size();
+        int count = (int) event.getGuild().retrieveEmotes().complete().stream().filter(e -> !e.isAnimated()).count();
 
         return max == count;
     }
