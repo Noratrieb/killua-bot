@@ -18,7 +18,6 @@ public class ReactionEventManager {
     }
 
     public static void onReactionAdd(MessageReactionAddEvent event){
-        System.out.println(ConsoleColors.PURPLE + "[ReactionEventManager 21] Reaction added: " + event.getReactionEmote() + ConsoleColors.RESET);
         long message = event.getMessageIdLong();
         ReactionListener listener = currentReactions.get(message);
         if (listener != null) {

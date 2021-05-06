@@ -48,7 +48,6 @@ public class CommandHandler {
         if (event.getMessage().getContentRaw().toLowerCase().startsWith(Config.PREFIX)) {
             String[] split = parser.splitOffCommandName(event.getMessage().getContentRaw());
             String command = split[0];
-            System.out.println(ConsoleColors.GREEN + "[CHandler 35] cmd: '" + command + "'" + " args: '" + split[1] + "'" + ConsoleColors.RESET);
             if (commands.containsKey(command)) {
                 commands.get(command).onMessageReceived(event, split[1]);
             } else if (hiddenCommands.containsKey(command)) {

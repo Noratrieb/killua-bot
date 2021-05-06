@@ -44,7 +44,6 @@ public class TriviaApproval extends ReactionAdapter {
         if (event.getUser() != null) {
             if (event.getUser().getIdLong() == Config.NILS_ID) {
                 String emote = event.getReaction().getReactionEmote().getName();
-                System.out.println(ConsoleColors.BLUE + "[TriviaApproval 47] Received Emote " + emote + ConsoleColors.RESET);
                 if (emote.equals(APPROVE_EMOTE)) {
                     event.getTextChannel().sendMessage("Question approved.").queue();
                     System.out.println(ConsoleColors.BLUE + "[TriviaApproval 50] Question Approved: " + question.getQuestion() + ConsoleColors.RESET);
