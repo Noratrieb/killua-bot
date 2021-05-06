@@ -12,8 +12,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EmoteAddCommand extends Command {
 
@@ -107,7 +108,7 @@ public class EmoteAddCommand extends Command {
 
     private boolean emoteLimitReached() {
         int max = event.getGuild().getMaxEmotes();
-        int count = event.getGuild().retrieveEmotes().complete().size();
+        int count = (int) event.getGuild().retrieveEmotes().complete().stream().filter(e -> !e.isAnimated()).count();
 
         return max == count;
     }
@@ -115,8 +116,8 @@ public class EmoteAddCommand extends Command {
     private byte[] resizeImage(byte[] bytes, String format, int size) throws IOException {
         reply("Image size too big (" + bytes.length / 1000 + "kB). Resizing image...");
         Image image = ImageIO.read(new ByteArrayInputStream(bytes));
-        double ratio = (double)image.getHeight(null) / (double)image.getWidth(null);
-        image = image.getScaledInstance(size, (int) (size * ratio), Image.SCALE_SMOOTH);
+        int ratio = image.getHeight(null) / image.getWidth(null);
+        image = image.getScaledInstance(size, size * ratio, Image.SCALE_SMOOTH);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         BufferedImage bufferedImg = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
