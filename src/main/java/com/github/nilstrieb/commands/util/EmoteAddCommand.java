@@ -8,8 +8,12 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
@@ -115,22 +119,22 @@ public class EmoteAddCommand extends Command {
 
     private byte[] resizeImage(byte[] bytes, String format, int size) throws IOException {
         reply("Image size too big (" + bytes.length / 1000 + "kB). Resizing image...");
-        Image image = ImageIO.read(new ByteArrayInputStream(bytes));
-        double ratio = (double)image.getHeight(null) / (double)image.getWidth(null);
-        image = image.getScaledInstance(size, (int) (size * ratio), Image.SCALE_SMOOTH);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        BufferedImage image = ImageIO.read(new ByteArrayInputStream(bytes));
+        double ratio = (double) image.getHeight(null) / (double) image.getWidth(null);
+        // Resize the image with the correct ratio
+        AffineTransform trm = new AffineTransform();
+        trm.scale(size / (double) image.getHeight(), (image.getHeight() * ratio) / image.getHeight());
+        final AffineTransformOp operation = new AffineTransformOp(trm, AffineTransformOp.TYPE_BILINEAR);
+        BufferedImage newImage = new BufferedImage(size, (int) (size * ratio), BufferedImage.TYPE_INT_ARGB);
+        newImage = operation.filter(image, newImage);
 
-        BufferedImage bufferedImg = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bGr = bufferedImg.createGraphics();
-        bGr.drawImage(image, 0, 0, null);
-        bGr.dispose();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(newImage, format, baos);
+        byte[] newBytes = baos.toByteArray();
 
-        ImageIO.write(bufferedImg, format, out);
-        bytes = out.toByteArray();
-        if (bytes.length > MAX_EMOTE_SIZE) {
-            return resizeImage(bytes, format, size - 100);
-        } else {
-            return bytes;
-        }
+        if(newBytes.length > MAX_EMOTE_SIZE)
+            newBytes = resizeImage(newBytes, format, size - 100);
+
+        return newBytes;
     }
 }
