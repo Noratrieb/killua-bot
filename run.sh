@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-docker run -e "BOT_TOKEN=LOL" -e "KILLUA_JSON_PATH=/app/trivia_questions.json" \
+docker run -e "BOT_TOKEN=TOKEN" -e "KILLUA_JSON_PATH=/app/trivia_questions.json" \
   -v "$(pwd)/trivia_questions.json:/app/trivia_questions.json" \
-  --name killua-bot killua-bot:1.0
+  --name killua-bot -d killua-bot:1.0
