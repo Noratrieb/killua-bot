@@ -42,33 +42,42 @@ public class Main {
         Config.setJda(jda);
 
         Thread t = new Thread(() -> {
-            Scanner scanner = new Scanner(System.in);
-            String line = scanner.nextLine();
-            while (!line.equals("exit") && !line.equals("quit")) {
-                if (line.startsWith("send")) {
-                    System.out.println("GuildID");
-                    line = scanner.nextLine();
-                    Guild guild = jda.getGuildById(line);
-                    if (guild != null) {
-                        System.out.println("TextChannelID");
-                        line = scanner.nextLine();
-                        TextChannel textChannel = guild.getTextChannelById(line);
-                        if (textChannel != null) {
-                            System.out.println("Message");
-                            line = scanner.nextLine();
-                            if (!line.equals("")) {
-                                textChannel.sendMessage(line).queue();
-                            }
-                        }
-                    }
-                } else if (line.startsWith("version") || line.startsWith("v")) {
-                    System.out.println(Config.VERSION);
-                }
-                line = scanner.nextLine();
+            try {
+                interactivePrompt(jda);
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.err.println("Interactive mode failed, presumably no TTY attached. Ignoring interactive mode...");
             }
-            System.exit(0);
         });
         t.start();
+    }
+
+    private static void interactivePrompt(JDA jda) {
+        Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine();
+        while (!line.equals("exit") && !line.equals("quit")) {
+            if (line.startsWith("send")) {
+                System.out.println("GuildID");
+                line = scanner.nextLine();
+                Guild guild = jda.getGuildById(line);
+                if (guild != null) {
+                    System.out.println("TextChannelID");
+                    line = scanner.nextLine();
+                    TextChannel textChannel = guild.getTextChannelById(line);
+                    if (textChannel != null) {
+                        System.out.println("Message");
+                        line = scanner.nextLine();
+                        if (!line.equals("")) {
+                            textChannel.sendMessage(line).queue();
+                        }
+                    }
+                }
+            } else if (line.startsWith("version") || line.startsWith("v")) {
+                System.out.println(Config.VERSION);
+            }
+            line = scanner.nextLine();
+        }
+        System.exit(0);
     }
 
     private static void setupCommands() {

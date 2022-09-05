@@ -1,7 +1,8 @@
 FROM maven AS build
 WORKDIR /app
 COPY . .
-RUN maven -f pom.xml clean package
+RUN mvn -f pom.xml clean assembly:assembly
 
-FROM openjdk:18-jre-slim
-COPY --from=build /app/target/1.0.0
+FROM gcr.io/distroless/java17
+COPY --from=build /app/target/KilluaBot-1.0.0-jar-with-dependencies.jar /app/KilluaBot.jar
+ENTRYPOINT ["java", "-jar", "/app/KilluaBot.jar"]
