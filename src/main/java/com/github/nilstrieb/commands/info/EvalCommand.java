@@ -26,16 +26,10 @@ public class EvalCommand extends Command {
                 case "help" -> {
                     EmbedBuilder builder = Config.getDefaultEmbed()
                             .setTitle("Bot Admin only")
-                            .addField("shutdown", "shutdown the bot", false)
                             .addField("triviadump", "Get JSON", false)
                             .addField("triviaset", "Set JSON. Make sure to backup the JSON beforehand with `triviadump`", false)
-                            .addField("reloadtrivia", "Reload the new trivia File", false)
-                            .addField("jar", "Upload a new jar file", false);
+                            .addField("reloadtrivia", "Reload the new trivia File", false);
                     reply(builder.build());
-                }
-                case "shutdown" -> {
-                    reply("Shutting down KilluaBot...");
-                    System.exit(0);
                 }
                 case "triviadump" -> {
                     File f = TriviaQuestionData.getFile();
@@ -52,22 +46,6 @@ public class EvalCommand extends Command {
                 case "reloadtrivia" -> {
                     TriviaQuestionData.reload();
                     reply("Reloaded Trivia Questions");
-                }
-                case "jar" -> {
-                    List<Message.Attachment> attachments = event.getMessage().getAttachments();
-                    if (attachments.size() > 0) {
-                        try {
-                            attachments.get(0).downloadToFile(
-                                    new File(EvalCommand.class.getProtectionDomain().getCodeSource()
-                                            .getLocation().toURI())).thenRun(() -> {
-                                reply("Downloaded jar file");
-                            });
-                        } catch (URISyntaxException e) {
-                            reply("Error: " + e.getMessage());
-                        }
-                    } else {
-                        reply("JSON File not found");
-                    }
                 }
                 default -> {
                     reply("Command is invalid.");

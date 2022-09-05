@@ -6,12 +6,14 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 
 
-public class InviteCommand extends Command {
+public class InfoCommand extends Command {
+
     private static final String INVITE_LINK =
             "(https://discord.com/api/oauth2/authorize?client_id=801015254023798825&permissions=8&scope=bot)";
+    private static final String GH_LINK = "(https://github.com/Nilstrieb/KilluaBot)";
 
-    public InviteCommand() {
-        super("invite", "Get the invite link for this bot");
+    public InfoCommand() {
+        super("info", "Get info about this bot");
     }
 
     @Override
@@ -23,8 +25,9 @@ public class InviteCommand extends Command {
         }
 
         EmbedBuilder builder = Config.getDefaultEmbed()
-                .setTitle("Invite Killua to your server!")
+                .setTitle("Killua Info!")
                 .addField("Invite link", "[Invite]" + INVITE_LINK, true)
+                .addField("Source code", "[Github (messy)]" + GH_LINK, true)
                 .setFooter("This bot was made by " + nils.getAsTag(), nils.getAvatarUrl());
         reply(builder.build());
     }
