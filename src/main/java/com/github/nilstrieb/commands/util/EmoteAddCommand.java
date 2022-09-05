@@ -10,11 +10,12 @@ import net.dv8tion.jda.api.entities.Message;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EmoteAddCommand extends Command {
 
@@ -116,7 +117,7 @@ public class EmoteAddCommand extends Command {
     private byte[] resizeImage(byte[] bytes, String format, int size) throws IOException {
         reply("Image size too big (" + bytes.length / 1000 + "kB). Resizing image...");
         Image image = ImageIO.read(new ByteArrayInputStream(bytes));
-        double ratio = (double)image.getHeight(null) / (double)image.getWidth(null);
+        double ratio = (double) image.getHeight(null) / (double) image.getWidth(null);
         image = image.getScaledInstance(size, (int) (size * ratio), Image.SCALE_SMOOTH);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 

@@ -1,12 +1,12 @@
 package com.github.nilstrieb.core.command;
 
 import com.github.nilstrieb.cofig.Config;
-import com.github.nilstrieb.util.ConsoleColors;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The CommandHandler handles everything about the commands

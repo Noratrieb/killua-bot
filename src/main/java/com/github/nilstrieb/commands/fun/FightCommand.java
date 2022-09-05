@@ -6,7 +6,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
-import java.util.*;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class FightCommand extends Command {
 
@@ -30,14 +32,14 @@ public class FightCommand extends Command {
 
     static class Fight {
 
-        private static String[] abilities = {"Little Flower", "Jajanken", "Lightning", "punch", "Chapter 7 Bankruptcy", "Ripper Cyclotron", "Rising Sun",
+        private static final String[] abilities = {"Little Flower", "Jajanken", "Lightning", "punch", "Chapter 7 Bankruptcy", "Ripper Cyclotron", "Rising Sun",
                 "100-Type Guanyin Bodhisattva"};
 
-        private Message fightMessage;
-        private Fighter fighter1;
-        private Fighter fighter2;
+        private final Message fightMessage;
+        private final Fighter fighter1;
+        private final Fighter fighter2;
 
-        private Fighter currentFighter;
+        private final Fighter currentFighter;
         Random random = new Random();
 
         public Fight(Message fightMessage, String fighter1, String fighter2) {

@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 
 import java.util.List;
-import java.util.Objects;
 
 public class HugCommand extends Command {
 

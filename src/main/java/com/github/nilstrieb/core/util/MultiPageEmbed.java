@@ -6,8 +6,6 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 
-import java.util.Objects;
-
 /**
  * This class sends a message to the channel in the event that contains multiple pages that can be navigated using reactinos
  */
