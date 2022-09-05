@@ -6,7 +6,6 @@ import com.github.nilstrieb.commands.fun.trivia.TriviaCommand;
 import com.github.nilstrieb.commands.info.EvalCommand;
 import com.github.nilstrieb.commands.info.HelpCommand;
 import com.github.nilstrieb.commands.info.InviteCommand;
-import com.github.nilstrieb.commands.info.ToukaCommand;
 import com.github.nilstrieb.commands.util.EmoteAddCommand;
 import com.github.nilstrieb.core.command.CommandListener;
 import com.github.nilstrieb.core.reactions.ReactionEventListener;
@@ -83,7 +82,6 @@ public class Main {
     private static void setupCommands() {
         new HelpCommand();
         new EvalCommand();
-        new ToukaCommand();
         new SayCommand();
         new InviteCommand();
         new QuoteCommand();
