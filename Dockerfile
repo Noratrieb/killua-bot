@@ -1,4 +1,4 @@
-FROM maven AS build
+FROM maven:3.8.6-eclipse-temurin-18 AS build
 WORKDIR /app
 COPY . .
 RUN mvn -f pom.xml clean assembly:assembly
